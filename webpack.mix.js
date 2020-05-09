@@ -11,5 +11,6 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.webpackConfig({ output: { filename: '[name].js', chunkFilename: 'js/[name].js', publicPath: 'http://103.98.148.33/~tindungb/inventory/public/' } });
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css');
