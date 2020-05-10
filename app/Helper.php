@@ -25,6 +25,7 @@ class Helper
     const REFERENCE_BANK = 'bank';
     const REFERENCE_ACTION_TYPE = 'action-type';
     const REFERENCE_TABLE_NAME = 'table-name';
+    const REFERENCE_DIRECTION = 'direction';
 
     const TABLE_TRANSPORT_VENDOR = 'transport_vendor';
     const TABLE_DRIVER = 'driver';

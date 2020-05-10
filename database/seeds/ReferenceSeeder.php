@@ -144,6 +144,31 @@ class ReferenceSeeder extends Seeder
                 'value' => 'huy',
                 'type' => Helper::REFERENCE_STATUS
             ],
+            [
+                'display_value' => 'Móng cái',
+                'value' => 'mong-cai',
+                'type' => Helper::REFERENCE_DIRECTION
+            ],
+            [
+                'display_value' => 'Lạng Sơn',
+                'value' => 'lang-son',
+                'type' => Helper::REFERENCE_DIRECTION
+            ],
+            [
+                'display_value' => 'Cont TPHCM',
+                'value' => 'cont-hcm',
+                'type' => Helper::REFERENCE_DIRECTION
+            ],
+            [
+                'display_value' => 'Cont Đà Nẵng',
+                'value' => 'cont-da-nang',
+                'type' => Helper::REFERENCE_DIRECTION
+            ],
+            [
+                'display_value' => 'Nội địa',
+                'value' => 'noi-dia',
+                'type' => Helper::REFERENCE_DIRECTION
+            ],
             // [
             //     'display_value' => '',
             //     'type' => ''
