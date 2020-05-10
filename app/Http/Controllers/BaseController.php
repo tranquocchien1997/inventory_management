@@ -50,10 +50,10 @@ class BaseController extends Controller
     {
         $cookie = $request->cookie('keymain');
 
-        if($cookie == null || $cookie !== 'JmBmJbeIoSW3fwO7Rw3j9wHBoeftU3jsYujnvpyG'){
-            return view('welcome');
-            abort(404);
-        }
+        // if($cookie == null || $cookie !== 'JmBmJbeIoSW3fwO7Rw3j9wHBoeftU3jsYujnvpyG'){
+        //     return view('welcome');
+        //     abort(404);
+        // }
 
         if (!Auth::check()) {
             return redirect(route('login'));

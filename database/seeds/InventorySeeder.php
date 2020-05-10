@@ -13,7 +13,7 @@ class InventorySeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 20; $i++) {
+        for ($i=0; $i < 5; $i++) {
             $qty = 0;
             DB::table('inventory')->insert([
                 'user_id' => DB::table('users')->inRandomOrder()->first()->id,

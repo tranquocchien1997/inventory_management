@@ -73,7 +73,6 @@
         },
         methods: {
             create(){
-                return
                 let route = this.$router.resolve({path: this.helper.parseFullPathToShortPath(API.CREATE_REPORT), query: this.model});
                 window.open(route.href, '_blank');
             },

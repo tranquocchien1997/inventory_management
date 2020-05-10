@@ -42,11 +42,9 @@ class LoginController extends Controller
         $cookie = $request->cookie('keymain');
 
 
-        if($cookie == null || $cookie !== 'JmBmJbeIoSW3fwO7Rw3j9wHBoeftU3jsYujnvpyG'){
-//            dd(1);
-//            return view('welcome');
-            abort(404);
-        }
+        // if($cookie == null || $cookie !== 'JmBmJbeIoSW3fwO7Rw3j9wHBoeftU3jsYujnvpyG'){
+        //     abort(404);
+        // }
     }
 
     public function validateLogin(Request $request){

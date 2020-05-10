@@ -20,7 +20,9 @@ class DatabaseSeeder extends Seeder
             TransportVendorSeeder::class,
             DriverSeeder::class,
             VehicleSeeder::class,
-            PermissionSeeder::class
+            PermissionSeeder::class,
+            ContractSeeder::class,
+            DeliverySeeder::class
         ]);
     }
 }
