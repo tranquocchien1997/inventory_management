@@ -20,10 +20,10 @@ class CreateTableDelivery extends Migration
             $table->integer('notification_id')->nullable();
             $table->integer('bank_id')->nullable();
             $table->dateTime('date_delivery')->nullable();
-            $table->bigInteger('quantity_delivery')->nullable();
+            $table->float('quantity_delivery', 8, 3)->nullable();
             $table->bigInteger('amount_delivery')->nullable();
             $table->dateTime('date_delivered')->nullable();
-            $table->bigInteger('quantity_delivered')->nullable();
+            $table->float('quantity_delivered', 8, 3)->nullable();
             $table->bigInteger('estimate_amount_receive')->nullable();
             $table->dateTime('estimate_date_amount_receive')->nullable();
             $table->bigInteger('amount_receive')->nullable();

@@ -19,12 +19,12 @@ class CreateTableContract extends Migration
             $table->integer('customer_id')->nullable();
             $table->integer('creator_id')->nullable();
             $table->string('code')->nullable();
-            $table->bigInteger('quantity')->nullable();
+            $table->float('quantity', 8, 3)->nullable();
             $table->bigInteger('amount')->nullable();
             $table->bigInteger('total_amount')->nullable();
             $table->integer('payment_method')->nullable();
-            $table->bigInteger('delivered_quantity')->nullable();
-            $table->bigInteger('received_quantity')->nullable();
+            $table->float('delivered_quantity', 8, 3)->nullable();
+            $table->float('received_quantity', 8, 3)->nullable();
             $table->dateTime('expired_delivery')->nullable();
             $table->dateTime('date_created')->nullable();
             $table->text('note')->nullable();

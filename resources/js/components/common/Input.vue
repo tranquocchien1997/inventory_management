@@ -14,7 +14,7 @@
             affix="đ"
             :is_prefix="false"/>
 
-        <b-numeric-formatted
+        <b-telerik-numberic
             :disabled="item.disable"
             v-else-if="item.type == 'number'"
             class-name="form-control"
@@ -23,7 +23,7 @@
             :org-placeholder="item.title"
             :label="item.title"
             v-model="model[item.model]"
-            :decimal-number=0 />
+            :decimal-number=7 />
 
         <b-date-and-time
             v-else-if="item.type == 'date' && !item.disable"

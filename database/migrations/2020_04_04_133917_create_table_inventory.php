@@ -20,8 +20,8 @@ class CreateTableInventory extends Migration
             $table->integer('type')->nullable();
             $table->string('name')->nullable();
             $table->string('address')->nullable();
-            $table->bigInteger('quantity')->default(0);
-            $table->bigInteger('current_quantity')->default(0);
+            $table->float('quantity', 8, 3)->default(0);
+            $table->float('current_quantity', 8, 3)->default(0);
             $table->text('description')->nullable();
             $table->integer('invalid')->default(0);
             $table->integer('status')->default(0);

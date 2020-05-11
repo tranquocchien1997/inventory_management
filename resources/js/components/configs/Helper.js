@@ -4,7 +4,7 @@ export const unitKilogram = 'kg';
 export const unitTonne = 'tấn';
 
 export function formatWeight(data, unit = unitTonne) {
-    return (data / 1000).toLocaleString() + ' ' + unitTonne
+    return data.toLocaleString() + ' ' + unitTonne
 }
 
 export function sortArrayByField($data, $field = 'created_at', $type = 'DESC') {

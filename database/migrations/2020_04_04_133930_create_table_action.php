@@ -23,7 +23,7 @@ class CreateTableAction extends Migration
             $table->integer('contract_id')->nullable();
             $table->integer('notification_id')->nullable();
             $table->string('code')->nullable();
-            $table->bigInteger('quantity')->nullable();
+            $table->float('quantity', 8, 3)->nullable();
             $table->bigInteger('amount')->nullable();
             $table->integer('invalid')->default(0);
             $table->integer('status')->default(23);
