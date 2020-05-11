@@ -24,7 +24,7 @@ class ReportController extends BaseController
         if ($request->type == 1) {
             $paper = 'a3';
             $query = DB::table(Helper::TABLE_CONTRACT)
-                ->whereRaw("(contract.created_at >= ? AND contract.created_at <= ?)", [$fromDate . " 00:00:00", $toDate . " 23:59:59"])
+                ->whereRaw("(contract.created_at >= ? AND contract.created_at <= ?)", [Carbon::createFromFormat('d/m/Y',$fromDate)->format('Y-m-d') . " 00:00:00", Carbon::createFromFormat('d/m/Y',$toDate)->format('Y-m-d') . " 23:59:59"])
                 ->leftJoin('customer', 'customer.id', '=', 'customer_id')
                 ->leftJoin('reference', 'reference.id', '=', 'payment_method')
                 ->leftJoin('delivery_contract', 'contract.id', '=', 'contract_id')
@@ -56,7 +56,7 @@ class ReportController extends BaseController
                 ->get();
 
             $newData = [];
-//            dd($query);
+           // dd($request->all());
 
             foreach ($query as $item){
                 if ($item->contract_id){
