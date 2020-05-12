@@ -276,6 +276,8 @@
 
         const DEFAULT_STATUS_ID = "{{\App\Helper::DEFAULT_STATUS_ID}}"
 
+        const PENDING_STATUS_ID = "{{\App\Helper::PENDING_STATUS_ID}}"
+
         const MODULE = JSON.parse('{!! json_encode(\App\Helper::MODULE) !!}')
 
         const METHOD = JSON.parse('{!! json_encode(\App\Helper::METHOD) !!}')

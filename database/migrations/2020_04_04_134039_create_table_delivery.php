@@ -18,6 +18,8 @@ class CreateTableDelivery extends Migration
             $table->string('code');
             $table->integer('delivery_type_id')->nullable();
             $table->integer('notification_id')->nullable();
+            $table->integer('contract_id')->nullable();
+
             $table->integer('bank_id')->nullable();
             $table->dateTime('date_delivery')->nullable();
             $table->float('quantity_delivery', 8, 3)->nullable();

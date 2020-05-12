@@ -14,6 +14,13 @@ export default [
         required: true
     },
     {
+        title: 'Đường đi',
+        model: 'direction_id',
+        type: 'dropdown',
+        data: [],
+        required: true
+    },
+    {
         title: 'Người tạo',
         model: 'creator_id',
         type: 'dropdown',
@@ -28,6 +35,7 @@ export default [
         type: 'dropdown',
         data: [],
     },
+
     {
         title: 'Thời hạn giao',
         model: 'expired_delivery',
@@ -37,6 +45,13 @@ export default [
         title: 'Mã hợp đồng',
         model: 'code',
         type: 'string',
+        required: true
+
+    },
+    {
+        title: 'Ngày hợp đồng',
+        model: 'date_created',
+        type: 'date',
     },
     {
         title: 'Số hàng',

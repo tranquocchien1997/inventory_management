@@ -3,35 +3,32 @@
         <b-numeric-formatted
             :disabled="item.disable"
             v-if="item.type == 'currency'"
-
             class-name="form-control"
             null-placeholder="-"
-            :placeholder="item.title"
-            :org-placeholder="item.title"
-            :label="item.title"
+            :placeholder="titleInput"
+            :org-placeholder="titleInput"
+            :label="titleInput"
             v-model="model[item.model]"
-            :decimal-number=0
-            affix="đ"
-            :is_prefix="false"/>
+            :decimal-number=0 />
 
         <b-telerik-numberic
             :disabled="item.disable"
             v-else-if="item.type == 'number'"
             class-name="form-control"
             null-placeholder="-"
-            :placeholder="item.title"
-            :org-placeholder="item.title"
-            :label="item.title"
+            :placeholder="titleInput"
+            :org-placeholder="titleInput"
+            :label="titleInput"
             v-model="model[item.model]"
             :decimal-number=7 />
 
         <b-date-and-time
             v-else-if="item.type == 'date' && !item.disable"
             :disabled="item.disable"
-            :label="item.title"
+            :label="titleInput"
             null-placeholder="-"
-            :placeholder="item.title"
-            :org-placeholder="item.title"
+            :placeholder="titleInput"
+            :org-placeholder="titleInput"
             v-model="model[item.model]"
             time-format="DD/MM/YYYY"
             :id="item.model" />
@@ -42,17 +39,17 @@
             v-model="model[item.model]"
             className="form-control"
             null-placeholder="-"
-            :org-placeholder="item.title"
-            :placeholder="item.title"
-            :label="item.title" />
+            :org-placeholder="titleInput"
+            :placeholder="titleInput"
+            :label="titleInput" />
 
         <b-textarea
             :disabled="item.disable"
             v-else-if="item.type == 'textArea'"
             hasPreView="true"
-            :label="item.title"
-            :placeholder="item.title"
-            :org-placeholder="item.title"
+            :label="titleInput"
+            :placeholder="titleInput"
+            :org-placeholder="titleInput"
             class-name="form-control"
             v-model="model[item.model]"
             null-placeholder="-" />
@@ -60,12 +57,12 @@
         <b-select
             :disabled="item.disable"
             v-else-if="item.type == 'dropdown'"
-            :label="item.title"
+            :label="titleInput"
             :hasAllDefault="false"
             :list="selectList"
             item-text="value"
             item-val="id"
-            :org-placeholder="item.title"
+            :org-placeholder="titleInput"
             null-placeholder="-"
             v-model="model[item.model]" />
 
@@ -75,15 +72,15 @@
             v-model="model[item.model]"
             className="form-control"
             null-placeholder="-"
-            :org-placeholder="item.title"
-            :placeholder="item.title"
-            :label="item.title" />
+            :org-placeholder="titleInput"
+            :placeholder="titleInput"
+            :label="titleInput" />
 
         <b-check-box
             :disabled="item.disable"
             v-else-if="item.type == 'checkbox'"
             v-model="model[item.model]"
-            :label="item.title" />
+            :label="titleInput" />
 
         <ul class="validation">{{item.error}}</ul>
     </div>
@@ -113,11 +110,14 @@
                 }
 
                 return null
+            },
+            titleInput(){
+                if (this.item){
+                    return this.item.required ? this.item.title + ' (*)' : this.item.title
+                }
+
+                return null
             }
         },
-        updated() {
-
-
-        }
     }
 </script>

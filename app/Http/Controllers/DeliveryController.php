@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DeliveryController extends BaseController
 {
@@ -16,6 +17,8 @@ class DeliveryController extends BaseController
                 'notification' => $this->baseModel->getAllRecord(Helper::TABLE_NOTIFICATION),
                 'deliveryType' => $this->baseModel->getReferenceByType(Helper::REFERENCE_DELIVERY_TYPE),
                 'contract' => $this->baseModel->getAllRecord(Helper::TABLE_CONTRACT),
+                'status' => $this->baseModel->getReferenceByType(Helper::REFERENCE_STATUS),
+
             ];
         }else{
             return [
@@ -23,6 +26,7 @@ class DeliveryController extends BaseController
                 'notification' => [],
                 'deliveryType' => [],
                 'contract' => [],
+                'status' => [],
             ];
         }
     }
@@ -54,11 +58,16 @@ class DeliveryController extends BaseController
         $contract_id = $request->contract_id;
         $param = $request->all();
 
-        unset($param['contract_id']);
 
         $delivery_id = $this->baseModel->createRecord($this->tableName, $param);
 
-        $this->baseModel->createRecord(Helper::TABLE_DELIVERY_CONTRACT, ['contract_id' => $contract_id, 'delivery_id' => $delivery_id]);
+        if ($request->status == Helper::SUCCESS_STATUS_ID && $request->contract_id){
+            $contract = DB::table(Helper::TABLE_CONTRACT)->find($request->contract_id);
+            DB::table(Helper::TABLE_CONTRACT)->where('id', $request->contract_id)->update([
+                'delivered_quantity' => $contract->delivered_quantity + $request->quantity_delivered
+            ]);
+        }
+//        $this->baseModel->createRecord(Helper::TABLE_DELIVERY_CONTRACT, ['contract_id' => $contract_id, 'delivery_id' => $delivery_id]);
 
         return BaseController::apiResponse(true);
 
@@ -67,7 +76,16 @@ class DeliveryController extends BaseController
     public function update(Request $request){
 
         $param = $request->all();
-        unset($param['contract_id']);
+
+        $data = $this->baseModel->getById($this->tableName,$request->id);
+
+        if ($request->status == Helper::SUCCESS_STATUS_ID && $request->contract_id && $data->status != $request->status){
+            $contract = DB::table(Helper::TABLE_CONTRACT)->find($request->contract_id);
+//            dd($contract);
+            $this->baseModel->updateById(Helper::TABLE_CONTRACT, $request->contract_id, [
+                'delivered_quantity' => $contract->delivered_quantity + $request->quantity_delivered
+            ]);
+        }
 
         return BaseController::apiResponse($this->baseModel->updateById($this->tableName,$request->id, $param));
 

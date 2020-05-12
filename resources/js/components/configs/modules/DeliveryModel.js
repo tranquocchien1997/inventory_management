@@ -22,6 +22,8 @@ export default [
         title: 'Mã vận chuyển',
         model: 'code',
         type: 'string',
+        required: true
+
     },
     {
         title: 'Ngày giao theo HĐ',
@@ -75,6 +77,13 @@ export default [
         title: 'Số tiền về',
         model: 'amount_receive',
         type: 'currency',
+    },
+    {
+        title: 'Trạng thái',
+        model: 'status',
+        type: 'dropdown',
+        data: [],
+        defaultValue: DEFAULT_STATUS_ID
     },
     {
         title: 'Ghi chú',

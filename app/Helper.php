@@ -67,7 +67,10 @@ class Helper
         'get' => true
     ];
 
-    const DEFAULT_STATUS_ID = 23;
+    const DEFAULT_STATUS_ID = 22;
+    const PENDING_STATUS_ID = 23;
+    const SUCCESS_STATUS_ID = 24;
+
 
     public static function getModuleByRouteName($routeName){
 

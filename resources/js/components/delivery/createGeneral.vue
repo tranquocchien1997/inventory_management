@@ -8,7 +8,7 @@
                 <h3 class="card-title">Phân công vận chuyển</h3>
                 <div class="card-tools">
                     <bBtn
-                        v-if="hasPermission('create')"
+                        v-if="hasPermission('create', 'delivery_transport')"
                         color='primary'
                         className="float-right btn-sm"
                         icon="fa fa-plus"

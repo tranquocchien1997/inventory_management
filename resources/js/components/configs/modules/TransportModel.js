@@ -4,6 +4,7 @@ export default [
         model: 'transport_type_id',
         type: 'dropdown',
         data: [],
+        required: true
     },
     {
         title: 'Mã đơn vị',

@@ -5,7 +5,7 @@
             <h3 class="card-title">Tạo báo cáo</h3>
         </div>
         <!-- /.card-body -->
-        <div class="card-body">
+        <div v-if="showForm" class="card-body">
             <div class="row">
                 <div v-for="item in configModel" class="col-md-4 form-group">
                     <InputField v-if="item" :item="item" :model="model" :data="getDropdownField(item)"/>
@@ -53,16 +53,17 @@
                     data: [],
                     required: true
                 },
-                {
-                    title: 'Từ ngày',
-                    model: 'from_date',
-                    type: 'date',
-                    required: true
-                },
+                // {
+                //     title: 'Từ ngày',
+                //     model: 'from_date',
+                //     type: 'date',
+                //     required: true
+                // },
                 {
                     title: 'Đến hết ngày',
                     model: 'to_date',
                     type: 'date',
+                    defaultValue: moment().format('DD/MM/YYYY')
                 },
 
             ]
@@ -73,8 +74,10 @@
         },
         methods: {
             create(){
-                let route = this.$router.resolve({path: this.helper.parseFullPathToShortPath(API.CREATE_REPORT), query: this.model});
-                window.open(route.href, '_blank');
+               if (this.validateModel()){
+                   let route = this.$router.resolve({path: this.helper.parseFullPathToShortPath(API.CREATE_REPORT), query: this.model});
+                   window.open(route.href, '_blank');
+               }
             },
             getParamsCommon(){
                 return {

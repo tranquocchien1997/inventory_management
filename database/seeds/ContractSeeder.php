@@ -17,6 +17,7 @@ class ContractSeeder extends Seeder
        			[
 	       			'customer_id' => DB::table('customer')->inRandomOrder()->first()->id,
 	       			'creator_id' => DB::table('users')->inRandomOrder()->first()->id,
+	       			'direction_id' => DB::table(\App\Helper::TABLE_REFERENCE)->where('type', 'direction')->inRandomOrder()->first()->id,
 	       			'code' => Str::random(6),
 	       			'quantity' => rand(100, 99999),
                     'amount' => rand(1000, 99999),

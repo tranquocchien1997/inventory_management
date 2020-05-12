@@ -17,6 +17,7 @@ class CreateTableContract extends Migration
             $table->bigIncrements('id');
             $table->integer('contract_type_id')->nullable();
             $table->integer('customer_id')->nullable();
+            $table->integer('direction_id')->nullable();
             $table->integer('creator_id')->nullable();
             $table->string('code')->nullable();
             $table->float('quantity', 8, 3)->nullable();

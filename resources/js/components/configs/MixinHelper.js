@@ -65,7 +65,7 @@ export default {
             for (let i = 0; i < validate.length; i++) {
                 if(validate[i].error && validate[i].error.length > 0){
                     status = true
-                    toastr.error("Tạo kho hàng mới không thành công!");
+                    toastr.error("Không thành công!");
 
                     break;
                 }

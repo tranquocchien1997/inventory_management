@@ -44,6 +44,8 @@ export default [
         title: 'Mã phiếu',
         model: 'code',
         type: 'string',
+        required: true
+
     },
     {
         title: 'Số hàng',

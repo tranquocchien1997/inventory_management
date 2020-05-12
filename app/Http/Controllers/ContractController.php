@@ -17,6 +17,8 @@ class ContractController extends BaseController
                 'contractType' => $this->baseModel->getReferenceByType(Helper::REFERENCE_CONTRACT_TYPE),
                 'paymentMethod' => $this->baseModel->getReferenceByType(Helper::REFERENCE_PAYMENT_METHOD),
                 'actionType' => $this->baseModel->getReferenceByType(Helper::REFERENCE_ACTION_TYPE),
+                'direction' => $this->baseModel->getReferenceByType(Helper::REFERENCE_DIRECTION),
+
             ];
         }else{
             return [
@@ -25,7 +27,7 @@ class ContractController extends BaseController
                 'contractType' => [],
                 'paymentMethod' => [],
                 'actionType' => [],
-
+                'direction' => [],
             ];
         }
     }
@@ -37,11 +39,14 @@ class ContractController extends BaseController
             'customer.company_name as company_name',
             'users.name as creator',
             'payment.display_value as payment',
+            'direction.display_value as direction'
         ];
         $condition['join'] = [
             [Helper::TABLE_USERS, 'users.id', 'contract.creator_id'],
             [Helper::TABLE_CUSTOMER, 'customer.id', 'contract.customer_id'],
             [Helper::TABLE_REFERENCE . ' as payment', 'payment.id', 'contract.payment_method'],
+            [Helper::TABLE_REFERENCE . ' as direction', 'direction.id', 'contract.direction_id'],
+
         ];
         $condition['condition'] = [
             'contract.invalid' => Helper::RECORD_INVALID,

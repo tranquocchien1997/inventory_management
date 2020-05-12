@@ -8,7 +8,7 @@
                 <h3 class="card-title">Phiếu kho</h3>
                 <div class="card-tools">
                     <bBtn
-                        v-if="hasPermission('create')"
+                        v-if="hasPermission('create', 'action')"
                         color='primary'
                         className="float-right btn-sm"
                         icon="fa fa-plus"
@@ -43,6 +43,7 @@
                 <h3 class="card-title">Vận chuyển</h3>
                 <div class="card-tools">
                     <bBtn
+                        v-if="hasPermission('create', 'delivery')"
                         color='primary'
                         className="float-right btn-sm"
                         icon="fa fa-plus"

@@ -33,7 +33,8 @@ export function formatDateTime(datetime, format = 'DD/MM/YYYY HH:mm') {
 
 export function formatCurrency(money) {
     if(money){
-        return money.toLocaleString() + 'đ'
+        // return money.toLocaleString() + 'đ'
+        return money.toLocaleString()
     }
 
     return null

@@ -17,7 +17,7 @@ class InventorySeeder extends Seeder
             $qty = 0;
             DB::table('inventory')->insert([
                 'user_id' => DB::table('users')->inRandomOrder()->first()->id,
-                'code' => Str::random(10),
+                'code' => 'Kho '.$i,
                 'type' => DB::table(Helper::TABLE_REFERENCE)->where('type', Helper::REFERENCE_INVENTORY_TYPE)->inRandomOrder()->first()->id,
                 'name' => 'Kho số '.$i,
                 'address' => 'tp Ho chi minh',

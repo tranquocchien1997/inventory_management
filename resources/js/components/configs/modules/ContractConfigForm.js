@@ -32,6 +32,13 @@ function getDropdownField(item) {
                 value: item.display_value
             }
         })
+    }else if (item.model == 'direction_id') {
+        return reference.direction.map((item) => {
+            return {
+                id: item.id,
+                value: item.display_value
+            }
+        })
     }
 }
 

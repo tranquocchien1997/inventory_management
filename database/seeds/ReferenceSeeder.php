@@ -54,11 +54,11 @@ class ReferenceSeeder extends Seeder
                 'value' => 'kho-trung-gian',
                 'type' => Helper::REFERENCE_INVENTORY_TYPE
             ],
-            [
-                'display_value' => 'Kho hàng lênh đênh',
-                'value' => 'kho-lenh-denh',
-                'type' => Helper::REFERENCE_INVENTORY_TYPE
-            ],
+//            [
+//                'display_value' => 'Kho hàng lênh đênh',
+//                'value' => 'kho-lenh-denh',
+//                'type' => Helper::REFERENCE_INVENTORY_TYPE
+//            ],
             [
                 'display_value' => 'Nhập',
                 'value' => 'nhap',

@@ -21,15 +21,11 @@ class DeliverySeeder extends Seeder
         		'amount_delivery' => rand(100, 99999),
         		'date_delivered' => Carbon::now(),
         		'quantity_delivered' => rand(1000, 9999),
+                'contract_id' => DB::table('contract')->inRandomOrder()->first()->id,
         		'estimate_amount_receive' => rand(100, 9999),
         		'estimate_date_amount_receive' => Carbon::now(),
         		'amount_receive' => rand(100, 9999),
         		'date_amount_receive' => Carbon::now()
-        	]);
-
-        	DB::table('delivery_contract')->insert([
-        		'delivery_id' => $delivery,
-        		'contract_id' => DB::table('contract')->inRandomOrder()->first()->id
         	]);
         }
     }

@@ -32,6 +32,13 @@ function getDropdownField(item) {
                 value: item.code
             }
         })
+    } else if (item.model == 'status' && reference.status) {
+        return reference.status.map((item) => {
+            return {
+                id: item.id,
+                value: item.display_value
+            }
+        })
     }
 }
 

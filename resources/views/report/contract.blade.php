@@ -136,5 +136,5 @@
     @endforeach
 
 </table>
-
+</body>
 </html>

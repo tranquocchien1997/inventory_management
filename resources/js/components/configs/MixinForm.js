@@ -26,7 +26,10 @@ export default {
         }
     },
 	methods : {
-        hasPermission(permission){
+        hasPermission(permission, moduleId = null){
+            if (moduleId){
+                return PERMISSION_USER.find(item => item.module == moduleId && item.method == permission)
+            }
             return PERMISSION_USER.find(item => item.module == this.moduleId && item.method == permission)
         },
         /**
