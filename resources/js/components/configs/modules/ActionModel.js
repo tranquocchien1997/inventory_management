@@ -40,13 +40,13 @@ export default [
         data: [],
         defaultValue: USER
     },
-    {
-        title: 'Mã phiếu',
-        model: 'code',
-        type: 'string',
-        required: true
-
-    },
+    // {
+    //     title: 'Mã phiếu',
+    //     model: 'code',
+    //     type: 'string',
+    //     required: true
+    //
+    // },
     {
         title: 'Số hàng',
         model: 'quantity',

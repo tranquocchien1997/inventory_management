@@ -58,7 +58,18 @@ export default {
             return arr
         },
         validateLength(){},
-        validateCustom(model){ return model},
+        validateCustom(model){
+            let arr = []
+            model.forEach((item) => {
+                if(item.type == 'number' && item.value && item.value > 50000){
+                    item.error = 'Độ dài ' + item.title.toLocaleLowerCase() + ' không hợp lệ'
+                }
+                arr.push(item)
+
+            })
+
+            return arr
+        },
         checkHasValidateError(validate){
             let status = false;
 

@@ -83,6 +83,11 @@ class PermissionSeeder extends Seeder
                 'value' => 'report',
                 'type' => Helper::REFERENCE_MODULE
             ],
+            [
+                'display_value' => 'Thông báo',
+                'value' => 'notification',
+                'type' => Helper::REFERENCE_MODULE
+            ],
         ];
 
         $method = [

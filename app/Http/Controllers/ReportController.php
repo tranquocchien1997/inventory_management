@@ -21,14 +21,20 @@ class ReportController extends BaseController
             $toDate = Carbon::now()->format('YYYY-MM-DD');
         }
 
+
         if ($request->type == 1) {
             $paper = 'a3';
             $data = $this->queryContractReport($fromDate, $toDate);
             $blade = 'report.contract';
-        } else {
+        } elseif($request->type == 2) {
             $paper = 'a4';
             $data = $this->queryInventoryReport($fromDate, $toDate);
             $blade = 'report.inventory';
+
+        } else {
+            $paper = 'a4';
+            $data = $this->queryInventoryBasicReport($fromDate, $toDate);
+            $blade = 'report.inventory_basic';
 
         }
 
@@ -267,6 +273,12 @@ class ReportController extends BaseController
             'delivery' => $newDeliData,
             'total' => $total
         ];
+
+    }
+
+    public function queryInventoryBasicReport($fromDate, $toDate){
+        $query = DB::table(Helper::TABLE_INVENTORY);
+
 
     }
 }

@@ -37,8 +37,9 @@
             }
             config.titlePanel = 'Danh sách phiếu kho'
             config.titleColumn = {
-                delivery_type: 'Loại vận chuyển',
+                // delivery_type: 'Loại vận chuyển',
                 notification_code: 'Mã thông báo',
+                code: 'Số Lot',
                 date_delivery: 'Ngày giao HĐ',
                 quantity_delivery: 'Số lượng giao HĐ',
                 amount_delivery: 'Số tiền nhận HĐ',

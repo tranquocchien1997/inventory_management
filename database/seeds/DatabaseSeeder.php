@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ReferenceSeeder::class,
             InventorySeeder::class,
-//            ActionSeed::class,
+            ActionSeed::class,
             CustomerSeeder::class,
             TransportVendorSeeder::class,
             DriverSeeder::class,

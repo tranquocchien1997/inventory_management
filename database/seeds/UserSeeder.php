@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
                 'name' => 'User '.$i,
                 'email' => "user{$i}@chien.com",
                 'password' => \Illuminate\Support\Facades\Hash::make('123123123'),
+                'note' => '123123123'
             ]);
         }
     }

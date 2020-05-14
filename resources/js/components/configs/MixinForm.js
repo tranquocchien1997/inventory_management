@@ -27,6 +27,7 @@ export default {
     },
 	methods : {
         hasPermission(permission, moduleId = null){
+            // return  true
             if (moduleId){
                 return PERMISSION_USER.find(item => item.module == moduleId && item.method == permission)
             }

@@ -196,6 +196,20 @@ class BaseModel extends Model
             $this->updateQuantityInventory($invetoryRecei->id, $newQuantityRecei,$column);
         }
 
+        $type = $this->getReferenceById($invetoryRecei->type)->value;
+
+//        if($actionType == 'luan-chuyen' && $type == 'kho-thue'){
+//            $detail = $invetoryRecei->detail;
+//
+//            if (empty($detail) || !isset($detail[$inventory->id])){
+//                $detail[$inventory->id] = $quantity;
+//            }else{
+//                $detail[$inventory->id] = $detail[$inventory->id] + $quantity;
+//            }
+//
+//            $this->updateById(Helper::TABLE_INVENTORY, $invetoryRecei->id, ['detail' => $detail]);
+//        }
+
         return Helper::returnFunction();
 
     }

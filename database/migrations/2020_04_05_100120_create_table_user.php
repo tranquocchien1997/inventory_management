@@ -18,6 +18,7 @@ class CreateTableUser extends Migration
             $table->string('name')->nullable();
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('note')->nullable();
             $table->rememberToken();
             $table->integer('role_id')->nullable();
             $table->integer('invalid')->default(0);

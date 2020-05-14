@@ -38,7 +38,7 @@
             config.titlePanel = 'Danh sách thông báo'
             config.titleColumn = {
                 code: 'Mã thông báo',
-                action_type: 'Loại thao tác',
+                // action_type: 'Loại thao tác',
                 title: 'Tiêu đề',
                 content: 'Nội dung',
                 updated_at: 'Ngày cập nhật',

@@ -1,11 +1,11 @@
 export default [
-    {
-        title: 'Loại vận chuyển',
-        model: 'delivery_type_id',
-        type: 'dropdown',
-        data: [],
-        required: true
-    },
+    // {
+    //     title: 'Loại vận chuyển',
+    //     model: 'delivery_type_id',
+    //     type: 'dropdown',
+    //     data: [],
+    //     required: true
+    // },
     {
         title: 'Mã thông báo',
         model: 'notification_id',
@@ -19,12 +19,13 @@ export default [
         data: []
     },
     {
-        title: 'Mã vận chuyển',
+        title: 'Số Lot',
         model: 'code',
         type: 'string',
         required: true
 
     },
+    {},
     {
         title: 'Ngày giao theo HĐ',
         model: 'date_delivery',

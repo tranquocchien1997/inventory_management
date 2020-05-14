@@ -11,7 +11,7 @@ export default [
         type: 'dropdown',
         data: []
     },
-    {},
+
     {
         title: 'Tên người vận chuyển',
         model: 'name',

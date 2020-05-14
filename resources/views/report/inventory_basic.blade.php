@@ -25,16 +25,16 @@
         background-color: #FFFFFF;
     }
 </style>
-<table style="border-collapse: collapse;width: 100%">
+<table style="border-collapse: collapse;">
     <tr>
         <td rowspan="2">STT</td>
-        <td rowspan="2">Số <br> hợp đồng</td>
-        <td rowspan="2">Ngày <br> hợp đồng</td>
+        <td rowspan="2">Số hợp đồng</td>
+        <td rowspan="2">Ngày hợp đồng</td>
         <td rowspan="2">Đơn giá</td>
-        <td rowspan="2">Số lượng <br> ký (tấn)</td>
-        <td rowspan="2">Số lượng <br> đã giao (tấn)</td>
-        <td rowspan="2">Số lượng còn <br> lại phải giao (tấn)</td>
-        <td rowspan="2">Hàng đi <br> trên đường</td>
+        <td rowspan="2">Số lượng ký (tấn)</td>
+        <td rowspan="2">Số lượng đã giao (tấn)</td>
+        <td rowspan="2">Số lượng còn lại phải giao (tấn)</td>
+        <td rowspan="2">Hàng đi trên đường</td>
         <td colspan="{{count($inventory)}}">Dự kiến số lượng phải giao của các đơn vị (tấn)</td>
     </tr>
     <tr>
@@ -96,21 +96,21 @@
                 @endforeach
             </tr>
         @endforeach
-            <tr>
-                <td></td>
-                <td>Cộng</td>
-                <td></td>
-                <td></td>
-                <td>{{formatQuantity($row['summary']['quantity'])}}</td>
-                <td>{{formatQuantity($row['summary']['delivered_quantity'])}}</td>
-                <td>{{formatQuantity($row['summary']['remain_quantity'])}}</td>
-                <td></td>
-                @foreach($row['summary']['inventory'] as $key_summary => $summary)
-                    @if ($key_summary)
-                        <td>{{formatQuantity($summary)}}</td>
-                    @endif
-                @endforeach
-            </tr>
+        <tr>
+            <td></td>
+            <td>Cộng</td>
+            <td></td>
+            <td></td>
+            <td>{{formatQuantity($row['summary']['quantity'])}}</td>
+            <td>{{formatQuantity($row['summary']['delivered_quantity'])}}</td>
+            <td>{{formatQuantity($row['summary']['remain_quantity'])}}</td>
+            <td></td>
+            @foreach($row['summary']['inventory'] as $key_summary => $summary)
+                @if ($key_summary)
+                    <td>{{formatQuantity($summary)}}</td>
+                @endif
+            @endforeach
+        </tr>
     @endforeach
     <tr>
         <td>{{$arr[$index_direction + 1]}}</td>
@@ -154,7 +154,7 @@
         <td>{{formatQuantity($total['delivered'])}}</td>
         <td>{{formatQuantity($total['remain'])}}</td>
         <td></td>
-{{--        <td></td>--}}
+        {{--        <td></td>--}}
         @foreach($total['inventory'] as $item)
             <td>{{formatQuantity($item)}}</td>
         @endforeach

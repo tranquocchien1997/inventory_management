@@ -85,6 +85,7 @@ class RolePermissionController extends BaseController
         $query = DB::table(Helper::TABLE_ROLE)
             ->join(Helper::TABLE_ROLE_PERMISSION, 'role_id', '=','role.id')
             ->join(Helper::TABLE_PERMISSION, 'permission.id','=', 'permission_id')
+            ->where('role.id', $request->id)
             ->get();
         return BaseController::apiResponse($query);
     }

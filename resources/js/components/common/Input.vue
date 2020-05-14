@@ -1,4 +1,4 @@
-<template>
+czxczxc<template>
     <div>
         <b-numeric-formatted
             :disabled="item.disable"
@@ -20,7 +20,8 @@
             :org-placeholder="titleInput"
             :label="titleInput"
             v-model="model[item.model]"
-            :decimal-number=7 />
+            :isDecimalNumber="true"
+            :decimalNumbers=3 />
 
         <b-date-and-time
             v-else-if="item.type == 'date' && !item.disable"

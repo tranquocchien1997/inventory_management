@@ -12,12 +12,12 @@
     td, th {
         text-align: center;
         border: 1px solid;
-        padding: 3px
+        padding: 4px
     }
 
     body {
         font-family: DejaVu Sans;
-        font-size: 12px;
+        font-size: 10px;
     }
 
     .blank_row
@@ -26,20 +26,20 @@
         background-color: #FFFFFF;
     }
 </style>
-<table style="border-collapse: collapse;">
+<table style="border-collapse: collapse;width: 100%;width: 100%">
     <tr>
         <td style="" rowspan="2">STT</td>
         <td colspan="2">Hợp đồng</td>
         <td rowspan="2">Khách hàng</td>
         <td rowspan="2">Số lượng</td>
         <td rowspan="2">Đơn giá</td>
-        <td rowspan="2">Tổng giá trị hợp đồng (USB)</td>
-        <td rowspan="2">Phương thức thanh toán (LC, TT)</td>
-        <td rowspan="2">Ngày cuối cùng phải giao hàng/thực hiện HĐ</td>
+        <td rowspan="2">Tổng giá trị <br> hợp đồng (USB)</td>
+        <td rowspan="2">Phương thức <br> thanh toán (LC, TT)</td>
+        <td rowspan="2">Ngày cuối <br> phải giao hàng</td>
         <td colspan="3">Kế hoạch giao hàng thực hiện theo hợp đồng</td>
         <td colspan="2">Số lượng hàng đã giao</td>
         <td colspan="2">Dự kiến tiền về theo thực hiện hợp đồng</td>
-        <td rowspan="2">Ngân hàng tiền về</td>
+        <td rowspan="2">Ngân hàng <br> tiền về</td>
         <td colspan="2">Số tiền đã về theo từng hợp đồng</td>
         <td rowspan="2">Ghi chú</td>
         <td rowspan="2">Chưa về</td>
@@ -57,7 +57,7 @@
         <td>Ngày</td>
         <td>USD</td>
     </tr>
-    <tr style="height: 60px !important;">
+    <tr style="height: 60px !important">
         <td></td>
         <td></td>
         <td></td>

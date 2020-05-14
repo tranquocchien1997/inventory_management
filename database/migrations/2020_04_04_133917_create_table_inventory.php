@@ -23,6 +23,7 @@ class CreateTableInventory extends Migration
             $table->float('quantity', 8, 3)->default(0);
             $table->float('current_quantity', 8, 3)->default(0);
             $table->text('description')->nullable();
+            $table->jsonb('detail')->nullable();
             $table->integer('invalid')->default(0);
             $table->integer('status')->default(0);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

@@ -42,7 +42,7 @@
                 user_name: 'Người tạo',
                 contract_code: 'Hợp đồng',
                 notification_code: 'Thông báo',
-                code: 'Mã phiếu',
+                // code: 'Mã phiếu',
                 quantity: 'Số lượng',
                 status_name: 'Trạng thái',
                 updated_at: 'Ngày cập nhật',

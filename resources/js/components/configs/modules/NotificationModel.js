@@ -1,10 +1,10 @@
 export default [
-    {
-        title: 'Loại thao tác',
-        model: 'action_type_id',
-        type: 'dropdown',
-        data: [],
-    },
+    // {
+    //     title: 'Loại thao tác',
+    //     model: 'action_type_id',
+    //     type: 'dropdown',
+    //     data: [],
+    // },
     {
         title: 'Mã thông báo',
         model: 'code',
@@ -19,6 +19,6 @@ export default [
     {
         title: 'Nội dung',
         model: 'content',
-        type: 'string',
+        type: 'textArea',
     },
 ]

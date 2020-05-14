@@ -9,7 +9,8 @@ export default [
         title: 'Mật khẩu',
         model: 'password',
         type: 'string',
-        disable: true,
+        alwayDisable: true,
+        disable:true,
         required: false
     },
     {
