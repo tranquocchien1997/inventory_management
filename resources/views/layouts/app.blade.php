@@ -283,6 +283,8 @@
 
         const METHOD = JSON.parse('{!! json_encode(\App\Helper::METHOD) !!}')
 
+        const ENROL_INVENTORY_TYPE_ID = "{{\App\Helper::ENROL_INVENTORY_TYPE_ID}}"
+
         @isset($permission)
             PERMISSION_USER = JSON.parse('{!! $permission !!}')
         @endisset

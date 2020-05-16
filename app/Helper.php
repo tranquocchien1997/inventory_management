@@ -70,7 +70,10 @@ class Helper
     const DEFAULT_STATUS_ID = 22;
     const PENDING_STATUS_ID = 23;
     const SUCCESS_STATUS_ID = 24;
+    const ENROL_INVENTORY_TYPE_ID = 7;
+    const COM_INVENTORY_TYPE_ID = 6;
 
+    const RELEASE_ACTION_TYPE_ID = 10;
 
     public static function getModuleByRouteName($routeName){
 
@@ -104,6 +107,8 @@ class Helper
             case 'xuat':
                 return $currentQuantity - $actionQuantity;
             case 'huy':
+                return $currentQuantity - $actionQuantity;
+            case 'luan-chuyen':
                 return $currentQuantity - $actionQuantity;
         }
     }

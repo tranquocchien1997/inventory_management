@@ -108,7 +108,20 @@
         created() {
 
             let config = this.config
-
+            config.modelField.push({
+                title: 'Ngày cập nhật',
+                model: 'updated_at',
+                type: 'date',
+                alwayDisable: true,
+                disable: true
+            })
+            config.modelField.push({
+                title: 'Ngày tạo',
+                model: 'created_at',
+                type: 'date',
+                alwayDisable: true,
+                disable: true
+            })
             this.createApi = config.createApi
             this.commonDataApi = config.commonDataApi
             this.referenceApi = config.referenceApi

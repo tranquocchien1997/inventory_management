@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    import Form from "../common/form";
+    import Form from "./form";
     import ActionConfigModel from "../configs/modules/ActionConfigForm"
 
     export default {

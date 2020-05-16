@@ -131,10 +131,10 @@
                             id: 2,
                             value: 'Chi tiết phải giao'
                         },
-                        // {
-                        //     id: 3,
-                        //     value: 'Báo cáo nhanh tồn kho'
-                        // }
+                        {
+                            id: 3,
+                            value: 'Báo cáo nhanh tồn kho'
+                        }
                     ]
                 }
             }

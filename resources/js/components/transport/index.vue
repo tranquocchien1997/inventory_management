@@ -41,8 +41,8 @@
                 driver_name: 'Người vận chuyển',
                 vehicle_code: 'Phương tiện',
                 transport_vendor_name: 'Đối tác vận chuyển',
-                updated_at: 'Ngày cập nhật',
-                created_at: 'Ngày tạo',
+                // updated_at: 'Ngày cập nhật',
+                // created_at: 'Ngày tạo',
                 action: 'Thao tác'
             }
 

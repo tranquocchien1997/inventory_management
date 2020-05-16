@@ -89,8 +89,10 @@ export default {
                         this.afterUpdated(success)
                     },
                     (response) => {
-                        if(response.status === 401)
-                            toastr.error('Permission Denied.')
+                        this.loadingDone()
+
+                        toastr.error('Thao tác không thành công')
+                      
                         this.updateError(response)
                         this.afterUpdated(response)
                     }
@@ -119,6 +121,8 @@ export default {
                         this.afterCreated(success)
                     },
                     (response) => {
+                        this.loadingDone()
+                        toastr.error('Thao tác không thành công')
 
                         this.createError(response)
                         this.afterCreated(response)

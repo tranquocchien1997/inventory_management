@@ -19,5 +19,12 @@ class UserSeeder extends Seeder
                 'note' => '123123123'
             ]);
         }
+
+//        DB::table('users')->insert([
+//            'name' => 'admin',
+//            'email' => "admin@fococev.com",
+//            'password' => \Illuminate\Support\Facades\Hash::make('fococev123'),
+//            'note' => 'fococev123'
+//        ]);
     }
 }

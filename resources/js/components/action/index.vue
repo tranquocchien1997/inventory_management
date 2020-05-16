@@ -45,8 +45,8 @@
                 // code: 'Mã phiếu',
                 quantity: 'Số lượng',
                 status_name: 'Trạng thái',
-                updated_at: 'Ngày cập nhật',
-                created_at: 'Ngày tạo',
+                // updated_at: 'Ngày cập nhật',
+                // created_at: 'Ngày tạo',
                 action: 'Thao tác'
             }
 

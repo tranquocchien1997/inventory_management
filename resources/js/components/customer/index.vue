@@ -41,8 +41,8 @@
                 contact_name: 'Tên người liên lạc',
                 phone: 'Điện thoại',
                 address: 'Địa chỉ',
-                updated_at: 'Ngày cập nhật',
-                created_at: 'Ngày tạo',
+                // updated_at: 'Ngày cập nhật',
+                // created_at: 'Ngày tạo',
                 action: 'Thao tác'
             }
 

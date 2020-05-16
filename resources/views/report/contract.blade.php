@@ -90,7 +90,7 @@
         function formatQuantity($qty){
             if (!$qty) return;
 
-            return $qty.',0';
+            return $qty;
         }
         function formatAmount($amount){
             if (!$amount) return;

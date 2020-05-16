@@ -19,6 +19,7 @@ class CreateTableAction extends Migration
             $table->integer('action_type_id')->nullable();
             $table->integer('inventory_id')->nullable();
             $table->integer('inventory_receive_id')->nullable();
+            $table->integer('inventory_product_id')->nullable();
             $table->integer('creator_id')->nullable();
             $table->integer('contract_id')->nullable();
             $table->integer('notification_id')->nullable();
@@ -29,7 +30,7 @@ class CreateTableAction extends Migration
             $table->integer('status')->default(23);
             $table->text('note')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 
         });
     }

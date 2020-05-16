@@ -90,13 +90,13 @@ class ReferenceSeeder extends Seeder
                 'type' => Helper::REFERENCE_DELIVERY_TYPE
             ],
             [
-                'display_value' => 'Chuyển khoản',
-                'value' => 'chuyen-khoan',
+                'display_value' => 'LL',
+                'value' => 'll',
                 'type' => Helper::REFERENCE_PAYMENT_METHOD
             ],
             [
-                'display_value' => 'Tiền mặt',
-                'value' => 'tien-mat',
+                'display_value' => 'LC',
+                'value' => 'lc',
                 'type' => Helper::REFERENCE_PAYMENT_METHOD
             ],
             [

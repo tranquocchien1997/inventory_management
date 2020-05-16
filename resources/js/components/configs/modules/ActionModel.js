@@ -14,7 +14,13 @@ export default [
         required: true
     },
     {
-        title: 'Kho nhận (luân chuyển)',
+        title: 'Hàng từ kho',
+        model: 'inventory_product_id',
+        type: 'dropdown',
+        data: [],
+    },
+    {
+        title: 'Kho nhận hàng',
         model: 'inventory_receive_id',
         type: 'dropdown',
         data: [],

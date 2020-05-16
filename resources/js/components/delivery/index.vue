@@ -50,8 +50,8 @@
                 bank: 'Ngân hàng tiền về',
                 date_amount_receive: 'Ngày tiền về',
                 amount_receive: 'Số tiền về',
-                updated_at: 'Ngày cập nhật',
-                created_at: 'Ngày tạo',
+                // updated_at: 'Ngày cập nhật',
+                // created_at: 'Ngày tạo',
                 action: 'Thao tác'
             }
 

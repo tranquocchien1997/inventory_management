@@ -25,7 +25,25 @@ function getDropdownField(item) {
                 value: item.name
             }
         })
-    } else if ((item.model == 'inventory_id' || item.model == 'inventory_receive_id')  && reference.inventory) {
+    } else if ((item.model == 'inventory_id' || item.model == 'inventory_receive_id' || item.model == 'inventory_product_id')  && reference.inventory) {
+        if (item.model == 'inventory_product_id'){
+            return reference.inventory.filter(item => item.type != ENROL_INVENTORY_TYPE_ID).map((item) => {
+                return {
+                    id: item.id,
+                    value: item.name
+                }
+            })
+        }
+        //
+        // if (item.model == 'inventory_receive_id'){
+        //     return reference.inventory.filter(item => item.type == ENROL_INVENTORY_TYPE_ID).map((item) => {
+        //         return {
+        //             id: item.id,
+        //             value: item.name
+        //         }
+        //     })
+        // }
+
         return reference.inventory.map((item) => {
             return {
                 id: item.id,

@@ -279,6 +279,129 @@ class ReportController extends BaseController
     public function queryInventoryBasicReport($fromDate, $toDate){
         $query = DB::table(Helper::TABLE_INVENTORY);
 
+        if ($fromDate){
+            $query = $query->where('inventory.created_at', '>=', Carbon::createFromFormat('d/m/Y',$fromDate)->format('Y-m-d') . " 00:00:00");
+        }
+
+        if ($toDate){
+            $query = $query->where('inventory.created_at', '<=', Carbon::createFromFormat('d/m/Y',$toDate)->format('Y-m-d') . " 23:59:00");
+
+        }
+
+        $query = $query->leftJoin('action', 'action.inventory_id', '=', 'inventory.id')
+            ->select([
+                'inventory.*',
+                'action.id as action_id',
+                'action.action_type_id as action_type_id',
+                'action.quantity as action_quantity',
+                'action.inventory_id as inventory_id',
+                'action.contract_id as contract_id',
+
+                'action.status as action_status'
+            ])
+//            ->where('action.action_type_id', Helper::RELEASE_ACTION_TYPE_ID)
+            ->get();
+        $com = [];
+        $enrol = [];
+        $justCreate = [];
+        $pending = [];
+        $contract_id = [];
+        foreach ($query as $item){
+            if ($item->type == Helper::COM_INVENTORY_TYPE_ID){
+                $com[$item->id]['quantity'] = $item->current_quantity;
+                $com[$item->id]['name'] = $item->name;
+
+            }
+
+            if ($item->type == Helper::ENROL_INVENTORY_TYPE_ID){
+                $enrol[$item->address][$item->name]['total'] = $item->current_quantity;
+                $enrol[$item->address][$item->name]['list'] = $item->detail ? json_decode($item->detail, true) : [];
+            }
+
+            if ($item->action_type_id == Helper::RELEASE_ACTION_TYPE_ID && $item->contract_id){
+                if ($item->action_status == Helper::PENDING_STATUS_ID){
+                    if (isset($pending[$item->id])){
+                        $pending[$item->id] += $item->action_quantity;
+                    }else{
+                        $pending[$item->id] = $item->action_quantity;
+
+                    }
+
+                }
+
+                if ($item->action_status == Helper::DEFAULT_STATUS_ID){
+                    if(isset($justCreate[$item->id])){
+                        $justCreate[$item->id] += $item->action_quantity;
+                    }else{
+                        $justCreate[$item->id] = $item->action_quantity;
+                    }
+                }
+
+                $contract_id[] = $item->contract_id;
+
+            }
+        }
+//        dd($justCreate);
+        $new_create = [];
+        $new_pending = [];
+        $total = [];
+        $total_com = 0;
+        foreach ($com as $k => $item){
+            $total_com += $item['quantity'];
+
+            if (isset($justCreate[$k])){
+                $new_create[$k] = $justCreate[$k];
+            }else{
+                $new_create[$k] = null;
+            }
+
+            if (isset($pending[$k])){
+                $new_pending[$k] = $pending[$k];
+            }else {
+                $new_pending[$k] = null;
+            }
+
+            $total[$k] = $item['quantity'] + $new_pending[$k];
+
+            $remain[$k] = $total[$k] - $new_create[$k];
+
+            $com_null[$k] = null;
+        }
+
+        $contract_query = DB::table(Helper::TABLE_CONTRACT)
+            ->whereIn('contract.id', $contract_id)
+            ->join('reference', 'reference.id', '=', 'direction_id')
+            ->get();
+        $sum_direction = [];
+
+        foreach ($contract_query as $data){
+            if (isset($sum_direction[$data->display_value])){
+                $sum_direction[$data->display_value] += $data->quantity;
+            }else{
+                $sum_direction[$data->display_value] = $data->quantity;
+            }
+        }
+
+        $str = '';
+
+        foreach ($sum_direction as $k => $item){
+            $str .= $k . ': ' .number_format($item, 2) . ' tấn, ';
+        }
+
+//        dd();
+        return [
+            'sub_title' => 'Tính đến hết ngày '. Carbon::now()->format('d/m/Y'),
+            'com' => $com,
+            'enrol' => $enrol,
+            'create' => $new_create,
+            'pending' => $new_pending,
+            'total' => $total,
+            'remain' => $remain,
+            'total_com' => $total_com,
+            'com_null' => $com_null,
+            'create_str' => substr_replace($str, '', -2, 2)
+        ];
 
     }
+
 }

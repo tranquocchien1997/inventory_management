@@ -41,8 +41,8 @@
                 transport_vendor: 'Đối tác',
                 name: 'Tên người',
                 phone: 'Điện thoại',
-                updated_at: 'Ngày cập nhật',
-                created_at: 'Ngày tạo',
+                // updated_at: 'Ngày cập nhật',
+                // created_at: 'Ngày tạo',
                 action: 'Thao tác'
             }
 

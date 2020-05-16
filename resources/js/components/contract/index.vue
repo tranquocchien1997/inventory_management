@@ -49,8 +49,8 @@
                 delivered_quantity: 'Số lượng đã giao',
                 received_quantity: 'Số lượng đã nhận',
                 // expired_delivery: 'Thời hạn giao',
-                updated_at: 'Ngày cập nhật',
-                created_at: 'Ngày tạo',
+                // updated_at: 'Ngày cập nhật',
+                // created_at: 'Ngày tạo',
                 action: 'Thao tác'
             }
 

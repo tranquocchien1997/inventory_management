@@ -76,15 +76,39 @@ class ActionController extends BaseController
 
     public function create(Request $request){
 
-        $quantity = $this->baseModel->getQuantityInventoryById($request->inventory_id);
+        DB::beginTransaction();
 
-        $newQuantity = Helper::calculateActionQuantity($request->action_type_id, $quantity['available'], $request->quantity);
+        $allType = $this->baseModel->getReferenceByType(Helper::REFERENCE_ACTION_TYPE);
+        $type = [];
+        foreach ($allType as $item){
+            $type[$item->id] = $item->value;
+        }
+        $quantity = $this->baseModel->getQuantityInventoryById($request->inventory_id);
+        info($quantity);
+        $newQuantity = Helper::calculateActionQuantity($type[$request->action_type_id], $quantity['available'], $request->quantity);
 
         if ($newQuantity < 0){
             return BaseController::apiResponse(Helper::returnFunction(false, 1, 'Số lượng tồn kho không đủ để đáp ứng'), '', self::API_UNEXPECTED_ERROR_RESPONSE_CODE);
         }
 
-        $createAction = $this->baseModel->createRecord($this->tableName, $request->all());
+        $check = null;
+
+        if($request->status == Helper::SUCCESS_STATUS_ID ){
+            if ($type[$request->action_type_id] == 'luan-chuyen'){
+                $check = $this->baseModel->handleChangeQuantityEnrolInventory($type[$request->action_type_id], $request->inventory_id, $request->quantity, $request->inventory_receive_id);
+            } elseif ($type[$request->action_type_id] == 'xuat'){
+                $check = $this->baseModel->handleChangeQuantityEnrolInventory($type[$request->action_type_id], $request->inventory_product_id, $request->quantity, $request->inventory_id);
+            }
+        }
+
+        if ($check && !$check['status']){
+            return BaseController::apiResponse($check, self::API_UNEXPECTED_ERROR_RESPONSE_CODE);
+        }
+
+        $params = $request->all();
+//
+//        unset($params['inventory_product_id']);
+        $createAction = $this->baseModel->createRecord($this->tableName, $params);
 
         $quantity = $this->baseModel->getQuantityInventoryById($request->inventory_id);
 
@@ -93,6 +117,7 @@ class ActionController extends BaseController
             'current_quantity' => $quantity['current']
         ]);
 
+        DB::commit();
         return BaseController::apiResponse($createAction);
 
     }
@@ -115,7 +140,23 @@ class ActionController extends BaseController
             return BaseController::apiResponse(Helper::returnFunction(false, 1, 'Số lượng tồn kho không đủ để đáp ứng'), '', self::API_UNEXPECTED_ERROR_RESPONSE_CODE);
         }
 
-        $update = $this->baseModel->updateById($this->tableName, $request->id, $request->all());
+        $check = null;
+
+        if ($type[$request->action_type_id] == 'luan-chuyen'){
+            $check = $this->baseModel->handleChangeQuantityEnrolInventory($type[$request->action_type_id], $request->inventory_id, $request->quantity, $request->inventory_receive_id);
+        } elseif ($type[$request->action_type_id] == 'xuat'){
+            $check = $this->baseModel->handleChangeQuantityEnrolInventory($type[$request->action_type_id], $request->inventory_product_id, $request->quantity, $request->inventory_id);
+        }
+
+        if ($check && !$check['status']){
+            return BaseController::apiResponse($check, self::API_UNEXPECTED_ERROR_RESPONSE_CODE);
+        }
+
+        $params = $request->all();
+
+//        unset($params['inventory_product_id']);
+
+        $update = $this->baseModel->updateById($this->tableName, $request->id, $params);
 
         $quantity = $this->baseModel->getQuantityInventoryById($request->inventory_id);
 
