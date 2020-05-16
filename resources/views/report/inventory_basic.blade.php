@@ -58,11 +58,17 @@ $index = 0;
         <td>Tổng cộng</td>
     </tr>
     <tr>
-        <td colspan="2">Thống kê tại nhà máy</td>
+        <td colspan="2" rowspan="2">Thống kê tại nhà máy</td>
         @foreach($com as $item)
             <td>{{formatQuantity($item['quantity'])}}</td>
         @endforeach
         <td>{{formatQuantity($total_com)}}</td>
+    </tr>
+    <tr>
+        @foreach($input as $item)
+            <td>{{$item}}</td>
+        @endforeach
+        <td></td>
     </tr>
     @foreach($enrol as $k => $item_group)
         <?php $index = 0;

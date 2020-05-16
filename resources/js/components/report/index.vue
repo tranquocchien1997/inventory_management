@@ -11,7 +11,13 @@
                     <InputField v-if="item" :item="item" :model="model" :data="getDropdownField(item)"/>
                 </div>
             </div>
+            <div v-if="showInputNote" class="row">
+                <div v-for="item in inventoryfields" class="col-md-3 form-group">
+                    <InputField v-if="item" :item="item" :model="inventory" :data="getDropdownField(item)"/>
+                </div>
+            </div>
         </div>
+
         <!-- /.card-body -->
         <div v-if="formEdit" class="card-footer">
             <bBtn title="createTitle" color="primary" :onClick="create"/>
@@ -38,7 +44,25 @@
                 updateApi: '',
                 commonDataApi: '',
                 listPath: '',
-                referenceApi: ''
+                referenceApi: '',
+                inventory: {}
+            }
+        },
+        computed: {
+            showInputNote(){
+                if (this.model['type'] == 3){
+                    return true
+                }
+                return  false
+            },
+            inventoryfields(){
+                return reference.inventory.map(item => {
+                    return {
+                        type: 'textArea',
+                        model: item.id,
+                        title: item.name
+                    }
+                })
             }
         },
         created() {
@@ -67,14 +91,16 @@
                 },
 
             ]
-
         },
         mounted() {
             this.model = this.getModelByConfigModel(this.configModel)
+
+            this.inventory = this.getModelByConfigModel(this.inventoryfields)
         },
         methods: {
             create(){
                if (this.validateModel()){
+                   this.model = {...this.model, ...this.inventory}
                    let route = this.$router.resolve({path: this.helper.parseFullPathToShortPath(API.CREATE_REPORT), query: this.model});
                    window.open(route.href, '_blank');
                }

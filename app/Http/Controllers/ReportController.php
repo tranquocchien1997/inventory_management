@@ -6,10 +6,16 @@ use App\Helper;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ReportController extends BaseController
 {
+    public function setReference($request){
+        return [
+            'inventory' => DB::table(Helper::TABLE_INVENTORY)->where('type', Helper::COM_INVENTORY_TYPE_ID)->get()
+        ];
+    }
     public function create(Request $request)
     {
 
@@ -34,6 +40,12 @@ class ReportController extends BaseController
         } else {
             $paper = 'a4';
             $data = $this->queryInventoryBasicReport($fromDate, $toDate);
+            $params = $request->all();
+            unset($params['type']);
+            unset($params['to_date']);
+
+            $data['input'] = $params;
+//            dd($data);
             $blade = 'report.inventory_basic';
 
         }
