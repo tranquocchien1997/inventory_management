@@ -27,7 +27,6 @@ class ReportController extends BaseController
             $toDate = Carbon::now()->format('YYYY-MM-DD');
         }
 
-
         if ($request->type == 1) {
             $paper = 'a3';
             $data = $this->queryContractReport($fromDate, $toDate);
@@ -92,6 +91,7 @@ class ReportController extends BaseController
                 'contract.quantity as quantity',
                 'contract.amount as amount',
                 'contract.id as contract_id',
+                'contract.invalid as contract_invalid',
                 'contract.total_amount as total_amount',
                 'contract.expired_delivery as expired_delivery',
                 'delivery.date_delivery as date_delivery',
@@ -104,17 +104,20 @@ class ReportController extends BaseController
                 'delivery.date_amount_receive as date_amount_receive',
                 'delivery.amount_receive as amount_receive',
                 'delivery.id as delivery_id',
+                'delivery.invalid as delivery_invalid',
                 'bank.display_value as bank_name',
                 'reference.display_value as payment',
             ])
-            ->orderBy('contract_id', 'ASC')
             ->get();
 
         $newData = [];
 //            dd($query);
 
         foreach ($query as $item){
-            if ($item->contract_id){
+            if ($item->contract_id &&
+                (!$item->contract_invalid || $item->contract_invalid == Helper::RECORD_INVALID) &&
+                (!$item->delivery_invalid || $item->delivery_invalid == Helper::RECORD_INVALID)
+            ){
                 $newData[$item->contract_id][$item->delivery_id] = $item;
             }
         }
@@ -143,9 +146,6 @@ class ReportController extends BaseController
 
         }
 
-//        $query = $query->where('contract.id', 30);
-
-
         $query = $query->leftJoin('action', 'action.contract_id', '=', 'contract.id')
             ->leftJoin('inventory', 'action.inventory_id', '=', 'inventory.id')
             ->leftJoin('reference', 'reference.id', '=', 'contract.direction_id')
@@ -154,11 +154,14 @@ class ReportController extends BaseController
                 'action.quantity as action_quantity',
                 'inventory.name as inventory_name',
                 'inventory.id as inventory_id',
-                'reference.display_value as direction_name'
+                'reference.display_value as direction_name',
+                'inventory.invalid as inventory_invalid',
+                'action.invalid as action_invalid',
+                'contract.invalid as contract_invalid',
             ])
             ->get();
 //        dd($query);
-        $inventory = DB::table(Helper::TABLE_INVENTORY)->where('invalid', 0)->get();
+        $inventory = DB::table(Helper::TABLE_INVENTORY)->where('invalid', 0)->where('type', Helper::COM_INVENTORY_TYPE_ID)->get();
 
         $newInventory = [];
 
@@ -174,36 +177,42 @@ class ReportController extends BaseController
         $data = [];
 //        dd($query);
         foreach ($query as $item){
-            $total_quantity += $item->quantity;
-            $total_delivered_quantity += $item->delivered_quantity;
-            $total_remain_quantity += $item->quantity - $item->delivered_quantity;
-            if ($item->inventory_id){
-                $total_inventory[$item->inventory_id] += $item->action_quantity;
-            }
-
-            if (isset($data[$item->direction_name]['lists'][$item->id])){
-//                dd($data);
-                $data[$item->direction_name]['lists'][$item->id]->inventory[$item->inventory_id] = $data[$item->direction_name]['lists'][$item->id]->inventory[$item->inventory_id] + $item->action_quantity;
-//                dd($data);
-
-            }else{
-                $localInven = $newInventory;
+            if((!$item->inventory_invalid || $item->inventory_invalid == Helper::RECORD_INVALID) &&
+                (!$item->action_invalid || $item->action_invalid == Helper::RECORD_INVALID) &&
+                (!$item->contract_invalid || $item->contract_invalid == Helper::RECORD_INVALID)
+            ){
+                $total_quantity += $item->quantity;
+                $total_delivered_quantity += $item->delivered_quantity;
+                $total_remain_quantity += $item->quantity - $item->delivered_quantity;
                 if ($item->inventory_id){
-                    $localInven[$item->inventory_id] = $item->action_quantity;
+                    $total_inventory[$item->inventory_id] += $item->action_quantity;
                 }
-                $item->inventory = $localInven;
-                $data[$item->direction_name]['lists'][$item->id] = $item;
+
+                if (isset($data[$item->direction_name]['lists'][$item->id])){
+
+                    $data[$item->direction_name]['lists'][$item->id]->inventory[$item->inventory_id] = $data[$item->direction_name]['lists'][$item->id]->inventory[$item->inventory_id] + $item->action_quantity;
+
+
+                }else{
+                    $localInven = $newInventory;
+                    if ($item->inventory_id){
+                        $localInven[$item->inventory_id] = $item->action_quantity;
+                    }
+                    $item->inventory = $localInven;
+                    $data[$item->direction_name]['lists'][$item->id] = $item;
+                }
+
+                if (!isset($data[$item->direction_name]['summary'])){
+                    $data[$item->direction_name]['summary']['quantity'] = $data[$item->direction_name]['summary']['delivered_quantity'] = $data[$item->direction_name]['summary']['remain_quantity'] = 0;
+                    $data[$item->direction_name]['summary']['inventory'] = $newInventory;
+
+                }
+                $data[$item->direction_name]['summary']['quantity'] += $item->quantity;
+                $data[$item->direction_name]['summary']['delivered_quantity'] += $item->delivered_quantity;
+                $data[$item->direction_name]['summary']['remain_quantity'] += $item->quantity > $item->delivered_quantity ? $item->quantity - $item->delivered_quantity : 0;
+                $data[$item->direction_name]['summary']['inventory'][$item->inventory_id] = $item->action_quantity;
             }
 
-            if (!isset($data[$item->direction_name]['summary'])){
-                $data[$item->direction_name]['summary']['quantity'] = $data[$item->direction_name]['summary']['delivered_quantity'] = $data[$item->direction_name]['summary']['remain_quantity'] = 0;
-                $data[$item->direction_name]['summary']['inventory'] = $newInventory;
-
-            }
-            $data[$item->direction_name]['summary']['quantity'] += $item->quantity;
-            $data[$item->direction_name]['summary']['delivered_quantity'] += $item->delivered_quantity;
-            $data[$item->direction_name]['summary']['remain_quantity'] += $item->quantity > $item->delivered_quantity ? $item->quantity - $item->delivered_quantity : 0;
-            $data[$item->direction_name]['summary']['inventory'][$item->inventory_id] = $item->action_quantity;
         }
 //        dd($data);
 
@@ -211,7 +220,13 @@ class ReportController extends BaseController
             ->join('delivery_transport', 'delivery_id', '=', 'delivery.id')
             ->join('transport', 'transport.id', '=', 'delivery_transport.transport_id')
             ->join('action', 'action.id', '=', 'delivery_transport.action_id')
-            ->where('delivery.status', Helper::PENDING_STATUS_ID)
+            ->where([
+                'delivery.status' => Helper::PENDING_STATUS_ID,
+                'delivery.invalid' => Helper::RECORD_INVALID,
+                'delivery_transport.invalid' => Helper::RECORD_INVALID,
+                'transport.invalid' => Helper::RECORD_INVALID,
+                'action.invalid' => Helper::RECORD_INVALID
+            ])
             ->select([
                 'transport.code as code',
                 'delivery_transport.amount as amount',
@@ -219,14 +234,12 @@ class ReportController extends BaseController
             ]);
 
         if ($toDate){
-            $query = $query->where('delivery.created_at', '<=', Carbon::createFromFormat('d/m/Y',$toDate)->format('Y-m-d') . " 23:59:00");
+            $delivery = $delivery->where('delivery.created_at', '<=', Carbon::createFromFormat('d/m/Y',$toDate)->format('Y-m-d') . " 23:59:00");
         }
 
         $delivery = $delivery->get();
 
-//        dd($delivery);
         $newDeli = [];
-
 
         $sum = [
             'sum' => 0,
@@ -308,49 +321,52 @@ class ReportController extends BaseController
                 'action.quantity as action_quantity',
                 'action.inventory_id as inventory_id',
                 'action.contract_id as contract_id',
-
+                'action.invalid as action_invalid',
                 'action.status as action_status'
             ])
-//            ->where('action.action_type_id', Helper::RELEASE_ACTION_TYPE_ID)
+            ->where('inventory.invalid', Helper::RECORD_INVALID)
             ->get();
+
         $com = [];
         $enrol = [];
         $justCreate = [];
         $pending = [];
         $contract_id = [];
         foreach ($query as $item){
-            if ($item->type == Helper::COM_INVENTORY_TYPE_ID){
-                $com[$item->id]['quantity'] = $item->current_quantity;
-                $com[$item->id]['name'] = $item->name;
-
-            }
-
-            if ($item->type == Helper::ENROL_INVENTORY_TYPE_ID){
-                $enrol[$item->address][$item->name]['total'] = $item->current_quantity;
-                $enrol[$item->address][$item->name]['list'] = $item->detail ? json_decode($item->detail, true) : [];
-            }
-
-            if ($item->action_type_id == Helper::RELEASE_ACTION_TYPE_ID && $item->contract_id){
-                if ($item->action_status == Helper::PENDING_STATUS_ID){
-                    if (isset($pending[$item->id])){
-                        $pending[$item->id] += $item->action_quantity;
-                    }else{
-                        $pending[$item->id] = $item->action_quantity;
-
-                    }
+            if (!$item->action_invalid || $item->action_invalid == Helper::RECORD_INVALID) {
+                if ($item->type == Helper::COM_INVENTORY_TYPE_ID){
+                    $com[$item->id]['quantity'] = $item->current_quantity;
+                    $com[$item->id]['name'] = $item->name;
 
                 }
 
-                if ($item->action_status == Helper::DEFAULT_STATUS_ID){
-                    if(isset($justCreate[$item->id])){
-                        $justCreate[$item->id] += $item->action_quantity;
-                    }else{
-                        $justCreate[$item->id] = $item->action_quantity;
-                    }
+                if ($item->type == Helper::ENROL_INVENTORY_TYPE_ID){
+                    $enrol[$item->address][$item->name]['total'] = $item->current_quantity;
+                    $enrol[$item->address][$item->name]['list'] = $item->detail ? json_decode($item->detail, true) : [];
                 }
 
-                $contract_id[] = $item->contract_id;
+                if ($item->action_type_id == Helper::RELEASE_ACTION_TYPE_ID && $item->contract_id){
+                    if ($item->action_status == Helper::PENDING_STATUS_ID){
+                        if (isset($pending[$item->id])){
+                            $pending[$item->id] += $item->action_quantity;
+                        }else{
+                            $pending[$item->id] = $item->action_quantity;
 
+                        }
+
+                    }
+
+                    if ($item->action_status == Helper::DEFAULT_STATUS_ID){
+                        if(isset($justCreate[$item->id])){
+                            $justCreate[$item->id] += $item->action_quantity;
+                        }else{
+                            $justCreate[$item->id] = $item->action_quantity;
+                        }
+                    }
+
+                    $contract_id[] = $item->contract_id;
+
+                }
             }
         }
 //        dd($justCreate);
