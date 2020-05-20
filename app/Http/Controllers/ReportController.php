@@ -154,6 +154,7 @@ class ReportController extends BaseController
                 'action.quantity as action_quantity',
                 'inventory.name as inventory_name',
                 'inventory.id as inventory_id',
+                'inventory.type as inventory_type',
                 'reference.display_value as direction_name',
                 'inventory.invalid as inventory_invalid',
                 'action.invalid as action_invalid',
@@ -179,13 +180,18 @@ class ReportController extends BaseController
         foreach ($query as $item){
             if((!$item->inventory_invalid || $item->inventory_invalid == Helper::RECORD_INVALID) &&
                 (!$item->action_invalid || $item->action_invalid == Helper::RECORD_INVALID) &&
-                (!$item->contract_invalid || $item->contract_invalid == Helper::RECORD_INVALID)
+                (!$item->contract_invalid || $item->contract_invalid == Helper::RECORD_INVALID) &&
+                $item->inventory_type == Helper::COM_INVENTORY_TYPE_ID
             ){
-                $total_quantity += $item->quantity;
-                $total_delivered_quantity += $item->delivered_quantity;
-                $total_remain_quantity += $item->quantity - $item->delivered_quantity;
+
                 if ($item->inventory_id){
                     $total_inventory[$item->inventory_id] += $item->action_quantity;
+                }
+
+                if (!isset($data[$item->direction_name]['summary'])){
+                    $data[$item->direction_name]['summary']['quantity'] = $data[$item->direction_name]['summary']['delivered_quantity'] = $data[$item->direction_name]['summary']['remain_quantity'] = 0;
+                    $data[$item->direction_name]['summary']['inventory'] = $newInventory;
+
                 }
 
                 if (isset($data[$item->direction_name]['lists'][$item->id])){
@@ -200,16 +206,18 @@ class ReportController extends BaseController
                     }
                     $item->inventory = $localInven;
                     $data[$item->direction_name]['lists'][$item->id] = $item;
+
+                    $data[$item->direction_name]['summary']['quantity'] += $item->quantity;
+                    $data[$item->direction_name]['summary']['delivered_quantity'] += $item->delivered_quantity;
+                    $data[$item->direction_name]['summary']['remain_quantity'] += $item->quantity > $item->delivered_quantity ? $item->quantity - $item->delivered_quantity : 0;
+
+                    $total_quantity += $item->quantity;
+                    $total_delivered_quantity += $item->delivered_quantity;
+                    $total_remain_quantity += $item->quantity - $item->delivered_quantity;
                 }
 
-                if (!isset($data[$item->direction_name]['summary'])){
-                    $data[$item->direction_name]['summary']['quantity'] = $data[$item->direction_name]['summary']['delivered_quantity'] = $data[$item->direction_name]['summary']['remain_quantity'] = 0;
-                    $data[$item->direction_name]['summary']['inventory'] = $newInventory;
 
-                }
-                $data[$item->direction_name]['summary']['quantity'] += $item->quantity;
-                $data[$item->direction_name]['summary']['delivered_quantity'] += $item->delivered_quantity;
-                $data[$item->direction_name]['summary']['remain_quantity'] += $item->quantity > $item->delivered_quantity ? $item->quantity - $item->delivered_quantity : 0;
+
                 $data[$item->direction_name]['summary']['inventory'][$item->inventory_id] = $item->action_quantity;
             }
 
@@ -341,7 +349,14 @@ class ReportController extends BaseController
                 }
 
                 if ($item->type == Helper::ENROL_INVENTORY_TYPE_ID){
-                    $enrol[$item->address][$item->name]['total'] = $item->current_quantity;
+//                    if (isset($enrol[$item->address][$item->name]['total'])){
+//                        $enrol[$item->address][$item->name]['total'] += $item->current_quantity;
+//                    }else{
+//                        info($item->name);
+//
+//                        info($item->address);
+                        $enrol[$item->address][$item->name]['total'] = array_sum(json_decode($item->detail, true));
+//                    }
                     $enrol[$item->address][$item->name]['list'] = $item->detail ? json_decode($item->detail, true) : [];
                 }
 
@@ -369,6 +384,8 @@ class ReportController extends BaseController
                 }
             }
         }
+
+//        dd($enrol);
 //        dd($justCreate);
         $new_create = [];
         $new_pending = [];
