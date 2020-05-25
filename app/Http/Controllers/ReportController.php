@@ -13,7 +13,8 @@ class ReportController extends BaseController
 {
     public function setReference($request){
         return [
-            'inventory' => DB::table(Helper::TABLE_INVENTORY)->where('type', Helper::COM_INVENTORY_TYPE_ID)->get()
+            'inventory' => DB::table(Helper::TABLE_INVENTORY)->select(['name', 'address', 'id', 'type'])->get(),
+//            'enrolInventory' => DB::table(Helper::TABLE_INVENTORY)->where('type', Helper::ENROL_INVENTORY_TYPE_ID)->get(),
         ];
     }
     public function create(Request $request)
@@ -40,11 +41,17 @@ class ReportController extends BaseController
             $paper = 'a4';
             $data = $this->queryInventoryBasicReport($fromDate, $toDate);
             $params = $request->all();
-            unset($params['type']);
-            unset($params['to_date']);
+            $data['input'] = json_decode($params['inventory'], true);
 
-            $data['input'] = $params;
-//            dd($data);
+            $sort = json_decode($request->sort, true);
+            $newSort = [];
+            foreach ($sort as $item){
+                if (isset($data['enrol'][$item])){
+                    $newSort[$item] = $data['enrol'][$item];
+                }
+            }
+            $data['enrol'] = $newSort;
+
             $blade = 'report.inventory_basic';
 
         }
@@ -152,6 +159,7 @@ class ReportController extends BaseController
             ->select([
                 'contract.*',
                 'action.quantity as action_quantity',
+                'action.inventory_product_id as inventory_product_id',
                 'inventory.name as inventory_name',
                 'inventory.id as inventory_id',
                 'inventory.type as inventory_type',
@@ -180,45 +188,81 @@ class ReportController extends BaseController
         foreach ($query as $item){
             if((!$item->inventory_invalid || $item->inventory_invalid == Helper::RECORD_INVALID) &&
                 (!$item->action_invalid || $item->action_invalid == Helper::RECORD_INVALID) &&
-                (!$item->contract_invalid || $item->contract_invalid == Helper::RECORD_INVALID) &&
-                $item->inventory_type == Helper::COM_INVENTORY_TYPE_ID
+                (!$item->contract_invalid || $item->contract_invalid == Helper::RECORD_INVALID)
             ){
+                if ($item->inventory_type == Helper::COM_INVENTORY_TYPE_ID){
+                    if ($item->inventory_id){
+                        $total_inventory[$item->inventory_id] += $item->action_quantity;
+                    }
 
-                if ($item->inventory_id){
-                    $total_inventory[$item->inventory_id] += $item->action_quantity;
-                }
+                    if (!isset($data[$item->direction_name]['summary'])){
+                        $data[$item->direction_name]['summary']['quantity'] = $data[$item->direction_name]['summary']['delivered_quantity'] = $data[$item->direction_name]['summary']['remain_quantity'] = 0;
+                        $data[$item->direction_name]['summary']['inventory'] = $newInventory;
 
-                if (!isset($data[$item->direction_name]['summary'])){
-                    $data[$item->direction_name]['summary']['quantity'] = $data[$item->direction_name]['summary']['delivered_quantity'] = $data[$item->direction_name]['summary']['remain_quantity'] = 0;
-                    $data[$item->direction_name]['summary']['inventory'] = $newInventory;
+                    }
 
-                }
+                    if (isset($data[$item->direction_name]['lists'][$item->id])){
 
-                if (isset($data[$item->direction_name]['lists'][$item->id])){
+                        $data[$item->direction_name]['lists'][$item->id]->inventory[$item->inventory_id] = $data[$item->direction_name]['lists'][$item->id]->inventory[$item->inventory_id] + $item->action_quantity;
 
-                    $data[$item->direction_name]['lists'][$item->id]->inventory[$item->inventory_id] = $data[$item->direction_name]['lists'][$item->id]->inventory[$item->inventory_id] + $item->action_quantity;
 
+                    }else{
+                        $localInven = $newInventory;
+                        if ($item->inventory_id){
+                            $localInven[$item->inventory_id] = $item->action_quantity;
+                        }
+                        $item->inventory = $localInven;
+                        $data[$item->direction_name]['lists'][$item->id] = $item;
+
+                        $data[$item->direction_name]['summary']['quantity'] += $item->quantity;
+                        $data[$item->direction_name]['summary']['delivered_quantity'] += $item->delivered_quantity;
+                        $data[$item->direction_name]['summary']['remain_quantity'] += $item->quantity > $item->delivered_quantity ? $item->quantity - $item->delivered_quantity : 0;
+
+                        $total_quantity += $item->quantity;
+                        $total_delivered_quantity += $item->delivered_quantity;
+                        $total_remain_quantity += $item->quantity - $item->delivered_quantity;
+                    }
+
+                    $data[$item->direction_name]['summary']['inventory'][$item->inventory_id] = $item->action_quantity;
 
                 }else{
-                    $localInven = $newInventory;
-                    if ($item->inventory_id){
-                        $localInven[$item->inventory_id] = $item->action_quantity;
+                    if ($item->inventory_product_id){
+                        $total_inventory[$item->inventory_product_id] += $item->action_quantity;
                     }
-                    $item->inventory = $localInven;
-                    $data[$item->direction_name]['lists'][$item->id] = $item;
 
-                    $data[$item->direction_name]['summary']['quantity'] += $item->quantity;
-                    $data[$item->direction_name]['summary']['delivered_quantity'] += $item->delivered_quantity;
-                    $data[$item->direction_name]['summary']['remain_quantity'] += $item->quantity > $item->delivered_quantity ? $item->quantity - $item->delivered_quantity : 0;
+                    if (!isset($data[$item->direction_name]['summary'])){
+                        $data[$item->direction_name]['summary']['quantity'] = $data[$item->direction_name]['summary']['delivered_quantity'] = $data[$item->direction_name]['summary']['remain_quantity'] = 0;
+                        $data[$item->direction_name]['summary']['inventory'] = $newInventory;
 
-                    $total_quantity += $item->quantity;
-                    $total_delivered_quantity += $item->delivered_quantity;
-                    $total_remain_quantity += $item->quantity - $item->delivered_quantity;
+                    }
+
+                    if (isset($data[$item->direction_name]['lists'][$item->id])){
+
+                        $data[$item->direction_name]['lists'][$item->id]->inventory[$item->inventory_product_id] = $data[$item->direction_name]['lists'][$item->id]->inventory[$item->inventory_product_id] + $item->action_quantity;
+
+                    }else{
+                        $localInven = $newInventory;
+                        if ($item->inventory_product_id){
+                            $localInven[$item->inventory_product_id] = $item->action_quantity;
+                        }
+
+                        $item->inventory = $localInven;
+
+                        $data[$item->direction_name]['lists'][$item->id] = $item;
+
+                        $data[$item->direction_name]['summary']['quantity'] += $item->quantity;
+                        $data[$item->direction_name]['summary']['delivered_quantity'] += $item->delivered_quantity;
+                        $data[$item->direction_name]['summary']['remain_quantity'] += $item->quantity > $item->delivered_quantity ? $item->quantity - $item->delivered_quantity : 0;
+
+                        $total_quantity += $item->quantity;
+                        $total_delivered_quantity += $item->delivered_quantity;
+                        $total_remain_quantity += $item->quantity - $item->delivered_quantity;
+                    }
+
+                    $data[$item->direction_name]['summary']['inventory'][$item->inventory_product_id] += $item->action_quantity;
                 }
 
 
-
-                $data[$item->direction_name]['summary']['inventory'][$item->inventory_id] = $item->action_quantity;
             }
 
         }

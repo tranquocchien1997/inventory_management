@@ -165,159 +165,6 @@ class BaseModel extends Model
         return $this->getById(Helper::TABLE_REFERENCE,$id);
     }
 
-//     public function processActionQuantity($column = 'quantity', $inventory, $action, $invetoryRecei = []){
-//         $actionType = $this->getReferenceById($action->action_type_id)->value;
-//         $newQuantity = null;
-//         $newQuantityRecei = null;
-
-//         $quantity = $column == 'quantity' ? $inventory->quantity : $inventory->current_quantity;
-
-//         if($actionType == 'luan-chuyen'){
-
-//             if(empty($invetoryRecei)){
-//                 return Helper::returnFunction(false, 0, 'Kho hàng nhận không tồn tại');
-//             }
-
-//             $quantityRecei = $column == 'quantity' ? $invetoryRecei->quantity : $invetoryRecei->current_quantity;
-
-//             $newQuantity = Helper::calculateActionQuantity('xuat', $quantity, $action->quantity);
-//             $newQuantityRecei = Helper::calculateActionQuantity('nhap', $quantityRecei, $action->quantity);
-//         }else{
-//             $newQuantity = Helper::calculateActionQuantity($actionType, $quantity, $action->quantity);
-//         }
-
-//         if($newQuantity < 0) {
-//             return Helper::returnFunction(false, 1, 'Số lượng tồn kho không đủ để đáp ứng');
-//         }
-
-//         $this->updateQuantityInventory($inventory->id, $newQuantity,$column);
-
-//         if($newQuantityRecei){
-//             $this->updateQuantityInventory($invetoryRecei->id, $newQuantityRecei,$column);
-//         }
-
-//         $type = $this->getReferenceById($invetoryRecei->type)->value;
-
-// //        if($actionType == 'luan-chuyen' && $type == 'kho-thue'){
-// //            $detail = $invetoryRecei->detail;
-// //
-// //            if (empty($detail) || !isset($detail[$inventory->id])){
-// //                $detail[$inventory->id] = $quantity;
-// //            }else{
-// //                $detail[$inventory->id] = $detail[$inventory->id] + $quantity;
-// //            }
-// //
-// //            $this->updateById(Helper::TABLE_INVENTORY, $invetoryRecei->id, ['detail' => $detail]);
-// //        }
-
-//         return Helper::returnFunction();
-
-//     }
-
-//     public function updateQuantityInventory($inventoryId, $newQuantity, $column = 'quantity'){
-//         return $this->updateById(Helper::TABLE_INVENTORY,$inventoryId, [$column => $newQuantity]);
-//     }
-
-//     public function handleStatusAction($action_id, $type, $newStatus)
-//     {
-
-//         $inventoryRecei = [];
-
-//         $action = $this->getById(Helper::TABLE_ACTION, $action_id);
-
-//         $currentStatus = $this->getReferenceById($action->status)->value;
-
-//         $actionType = $this->getReferenceById($action->action_type_id)->value;
-//         $inventory = $this->getById(Helper::TABLE_INVENTORY, $action->inventory_id);
-
-//         if ($type == 'delete'){
-
-//             return $this->actionRemove($currentStatus,$inventory,$action);
-
-//         } elseif ($type == 'restore'){
-//             return $this->actionCreate($currentStatus,$inventory,$action,$inventoryRecei);
-//         }
-
-//         $newStatus = $this->getReferenceById($newStatus)->value;
-
-
-//         if ($action->inventory_receive_id){
-//             $inventoryRecei = $this->getById(Helper::TABLE_INVENTORY, $action->inventory_receive_id);
-//         }
-
-//         if($type == 'create'){
-
-//             return $this->actionCreate($newStatus,$inventory,$action,$inventoryRecei);
-
-//         } elseif ($type == 'update' && $currentStatus != $newStatus){
-
-//             if($currentStatus == 'vua-tao' || $currentStatus == 'huy'){
-
-//                 return $this->actionCreate($newStatus,$inventory,$action,$inventoryRecei);
-
-//             } elseif ($currentStatus == 'dang-thuc-hien'){
-
-//                 if ($newStatus == 'vua-tao' || $newStatus == 'huy'){
-
-//                     return $this->actionRemove($currentStatus,$inventory,$action);
-
-//                 }else{
-
-//                     return $this->actionCreate($newStatus,$inventory,$action,$inventoryRecei);
-
-//                 }
-
-//             } elseif ($currentStatus == 'hoan-tat'){
-
-//                 return $this->actionRemove($currentStatus,$inventory,$action);
-
-//             }
-//         }
-//     }
-
-//     public function actionCreate($newStatus,$inventory,$action,$inventoryRecei)
-//     {
-//         $currentStatus = $this->getReferenceById($action->status)->value;
-//         $process = Helper::returnFunction();
-
-//         if($newStatus == 'dang-thuc-hien' || ($newStatus == 'hoan-tat' && $currentStatus == 'vua-tao')){
-//             $process = $this->processActionQuantity('quantity', $inventory, $action, $inventoryRecei);
-//             if(!$process['status']){
-//                 return $process;
-//             }
-//         }
-
-//         if ($newStatus == 'hoan-tat'){
-//             $process = $this->processActionQuantity('current_quantity', $inventory, $action, $inventoryRecei);
-
-//         }
-//         return $process;
-//     }
-
-//     public function actionRemove($currentStatus,$inventory,$action){
-
-//         $newQuantity = null;
-
-//         if($currentStatus == 'dang-thuc-hien'){
-//             $newQuantity = Helper::calculateActionQuantity('huy', $inventory->quantity, $action->quantity);
-
-//         }elseif($currentStatus == 'hoan-tat'){
-//             $newQuantity = Helper::calculateActionQuantity('huy', $inventory->current_quantity, $action->quantity);
-//         }
-
-//         if ($newQuantity === null){
-//             return Helper::returnFunction();
-//         }
-
-//         if($newQuantity < 0) {
-//             return Helper::returnFunction(false, 1, 'Số lượng tồn kho không đủ để đáp ứng');
-//         }
-
-//         $this->updateQuantityInventory($inventory->id, $newQuantity, $currentStatus == 'dang-thuc-hien' ? "quantity" : "current_quantity");
-
-//         return Helper::returnFunction();
-//     }
-
     public function getQuantityInventoryById($id, $skipId = null)
     {
         $current = 0;
@@ -343,6 +190,7 @@ class BaseModel extends Model
                 `action`
             WHERE
                 inventory_id = ' . $id . '
+                OR inventory_receive_id = ' . $id . '
                 ' . $skipId . '
                 AND (
                 `status` = ' . $pending . '
@@ -351,11 +199,20 @@ class BaseModel extends Model
         ');
 
         foreach ($actions as $action){
-            $available = Helper::calculateActionQuantity($type[$action->action_type_id], $available, $action->quantity);
+            if ($action->inventory_id == $id){
+                $available = Helper::calculateActionQuantity($type[$action->action_type_id], $available, $action->quantity);
 
-            if ($action->status == $success){
-                $current = Helper::calculateActionQuantity($type[$action->action_type_id], $current, $action->quantity);
+                if ($action->status == $success){
+                    $current = Helper::calculateActionQuantity($type[$action->action_type_id], $current, $action->quantity);
+                }
+            }else{
+                $available = Helper::calculateActionQuantity('nhap', $available, $action->quantity);
+
+                if ($action->status == $success){
+                    $current = Helper::calculateActionQuantity('nhap', $current, $action->quantity);
+                }
             }
+
         }
 
         return [

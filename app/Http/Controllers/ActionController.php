@@ -84,8 +84,9 @@ class ActionController extends BaseController
             $type[$item->id] = $item->value;
         }
         $quantity = $this->baseModel->getQuantityInventoryById($request->inventory_id);
-        info($quantity);
+
         $newQuantity = Helper::calculateActionQuantity($type[$request->action_type_id], $quantity['available'], $request->quantity);
+        info($quantity);
 
         if ($newQuantity < 0){
             return BaseController::apiResponse(Helper::returnFunction(false, 1, 'Số lượng tồn kho không đủ để đáp ứng'), '', self::API_UNEXPECTED_ERROR_RESPONSE_CODE);
@@ -106,8 +107,7 @@ class ActionController extends BaseController
         }
 
         $params = $request->all();
-//
-//        unset($params['inventory_product_id']);
+
         $createAction = $this->baseModel->createRecord($this->tableName, $params);
 
         $quantity = $this->baseModel->getQuantityInventoryById($request->inventory_id);
