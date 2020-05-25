@@ -17,7 +17,7 @@
                     <table class="table table-sm col-md-6">
                         <thead>
                         <tr>
-                            <th>Kho</th>
+                            <th>Tuyến đường</th>
                             <th>Thao tác</th>
                         </tr>
                         </thead>
@@ -148,7 +148,7 @@
                 newData[item.id] = item
             })
 
-            console.log(newData)
+            // console.log(newData)
             this.inventorySort = Object.values(newData)
             // this.inventorySort = JSON.parse(JSON.stringify(data))
 
