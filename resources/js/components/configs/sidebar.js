@@ -47,7 +47,7 @@ export default {
                     path: Helper.parseFullPathToShortPath(PAGE.LIST_TRANSPORT)
                 },
                 {
-                    title: 'Người',
+                    title: 'Người vận chuyển',
                     id: 'driver',
                     path: Helper.parseFullPathToShortPath(PAGE.LIST_DRIVER)
                 },

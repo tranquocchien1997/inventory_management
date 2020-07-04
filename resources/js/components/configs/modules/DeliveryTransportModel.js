@@ -7,7 +7,7 @@ export default [
         required: true
     },
     {
-        title: 'Vận chuyển',
+        title: 'Thực hiện HĐ',
         model: 'delivery_id',
         type: 'dropdown',
         data: [],

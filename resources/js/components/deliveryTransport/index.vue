@@ -38,7 +38,7 @@
             config.titlePanel = 'Danh sách phiếu kho'
             config.titleColumn = {
                 action_code: 'Phiếu kho',
-                delivery_code: 'Vận chuyển',
+                delivery_code: 'Thực hiện HĐ',
                 transport_code: 'Đơn vị',
                 amount: 'Số hàng',
                 departure: 'Xuất phát',
