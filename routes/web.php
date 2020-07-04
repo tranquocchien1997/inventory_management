@@ -116,6 +116,9 @@ Route::prefix('report/')->group(function () {
     Route::get('create', 'ReportController@pageMain')->name('report.create');
 });
 
+Route::prefix('reference/')->group(function () {
+    Route::get('lists', 'ReferenceController@pageMain')->name('reference.lists');
+});
 
 Route::prefix('api/')->group(function () {
     Route::prefix('inventory/')->group(function () {
@@ -278,6 +281,15 @@ Route::prefix('api/')->group(function () {
         Route::post('delete', 'NotiController@delete')->name('api.notification.delete');
         Route::post('restore', 'NotiController@restore')->name('api.notification.restore');
         Route::post('reference', 'NotiController@reference')->name('api.notification.reference');
+    });
+
+    Route::prefix('reference/')->group(function () {
+        Route::post('lists', 'ReferenceController@lists')->name('api.reference.lists');
+        Route::post('create', 'ReferenceController@create')->name('api.reference.create');
+        Route::post('update', 'ReferenceController@update')->name('api.reference.update');
+        Route::post('get', 'ReferenceController@get')->name('api.reference.get');
+        Route::post('reference', 'ReferenceController@reference')->name('api.reference.reference');
+
     });
 
     Route::prefix('report/')->group(function () {

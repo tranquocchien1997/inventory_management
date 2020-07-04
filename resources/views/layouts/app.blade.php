@@ -175,6 +175,10 @@
             // REPORT
             CREATE_REPORT: "{{route('api.report.create')}}",
 
+            // REPORT
+            LIST_REFERENCE_TYPE: "{{route('api.reference.reference')}}",
+            LIST_REFERENCE: "{{route('api.reference.lists')}}",
+            UPDATE_REFERENCE: "{{route('api.reference.update')}}",
 
             GET_ACTION_BY_CONTRACT: "{{route('api.contract.getAction')}}",
             GET_DELIVERY_BY_CONTRACT: "{{route('api.contract.getDelivery')}}",
@@ -266,6 +270,8 @@
             // REPORT
             CREATE_REPORT: "{{route('report.create')}}",
 
+            // REFERENCE
+            LIST_REFERENCE: "{{route('reference.lists')}}",
         }
 
         let reference
@@ -276,6 +282,8 @@
         const USER = "{{Auth::id()}}"
 
         const DEFAULT_STATUS_ID = "{{\App\Helper::DEFAULT_STATUS_ID}}"
+
+        const DEFAULT_STATUS_PAYMENT_ID = "{{\App\Helper::DEFAULT_STATUS_PAYMENT_ID}}"
 
         const PENDING_STATUS_ID = "{{\App\Helper::PENDING_STATUS_ID}}"
 

@@ -92,7 +92,7 @@ export default {
                         this.loadingDone()
 
                         toastr.error('Thao tác không thành công')
-                      
+
                         this.updateError(response)
                         this.afterUpdated(response)
                     }
@@ -250,7 +250,7 @@ export default {
         loadingDone(){
             setTimeout(() => {
                 this.loading = false
-            }, 1000);
+            }, 500);
         },
 
 

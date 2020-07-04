@@ -12,13 +12,13 @@ class DeliveryController extends BaseController
     {
         if(Helper::getMethodByRouteName($request->route()->getName()) == 'reference'){
             return [
-
                 'bank' => $this->baseModel->getReferenceByType(Helper::REFERENCE_BANK),
                 'notification' => $this->baseModel->getAllRecord(Helper::TABLE_NOTIFICATION),
                 'deliveryType' => $this->baseModel->getReferenceByType(Helper::REFERENCE_DELIVERY_TYPE),
                 'contract' => $this->baseModel->getAllRecord(Helper::TABLE_CONTRACT),
                 'status' => $this->baseModel->getReferenceByType(Helper::REFERENCE_STATUS),
-
+                'statusPayment' => $this->baseModel->getReferenceByType(Helper::REFERENCE_PAYMENT_STATUS),
+                'unitAmount' => $this->baseModel->getReferenceByType(Helper::REFERENCE_UNIT_AMOUNT),
             ];
         }else{
             return [
@@ -27,6 +27,8 @@ class DeliveryController extends BaseController
                 'deliveryType' => [],
                 'contract' => [],
                 'status' => [],
+                'statusPayment' => [],
+                'unitAmount' => [],
             ];
         }
     }
@@ -37,11 +39,13 @@ class DeliveryController extends BaseController
             'delivery.*',
             'notification.code as notification_code',
             'bank.display_value as bank',
+            'payment.display_value as status_payment',
             'delivery_type.display_value as delivery_type'
         ];
         $condition['join'] = [
             [Helper::TABLE_NOTIFICATION, 'notification.id', 'delivery.notification_id'],
             [Helper::TABLE_REFERENCE . ' as bank', 'bank.id', 'delivery.bank_id'],
+            [Helper::TABLE_REFERENCE . ' as payment', 'payment.id', 'delivery.status_payment'],
             [Helper::TABLE_REFERENCE . ' as delivery_type', 'delivery_type.id', 'delivery.delivery_type_id']
         ];
 

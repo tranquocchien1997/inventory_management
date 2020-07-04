@@ -39,11 +39,25 @@ function getDropdownField(item) {
                 value: item.display_value
             }
         })
+    } else if (item.model == 'status_payment' && reference.statusPayment){
+        return reference.statusPayment.map((item) => {
+            return {
+                id: item.id,
+                value: item.display_value
+            }
+        })
+    } else if (item.model == 'unit_amount') {
+        return reference.unitAmount.map((item) => {
+            return {
+                id: item.id,
+                value: item.display_value
+            }
+        })
     }
 }
 
 config.id = 'delivery'
-config.title = 'Thông tin vận chuyển'
+config.title = 'Thông tin thực hiện HĐ'
 config.modelField = DeliveryModel
 config.createApi = API.CREATE_DELIVERY
 config.updateApi = API.UPDATE_DELIVERY
@@ -52,8 +66,8 @@ config.referenceApi = API.REFERENCE_DELIVERY
 // config.listPath = PAGE.LIST_DELIVERY
 config.updatePath = PAGE.UPDATE_DELIVERY
 config.softDeleteApi = API.DELETE_DELIVERY
-config.updateNoti = "Cập nhật thông tin vận chuyển thành công!"
-config.createNoti = "Tạo vận chuyển mới thành công!"
+config.updateNoti = "Cập nhật thực hiện HĐ thành công!"
+config.createNoti = "Tạo thực hiện HĐ mới thành công!"
 config.getDropdownField = getDropdownField
 
 

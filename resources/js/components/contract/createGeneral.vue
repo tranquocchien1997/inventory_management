@@ -40,7 +40,7 @@
         <div class="card card-primary card-outline">
             <Loading :show="loading.delivery"/>
             <div class="card-header">
-                <h3 class="card-title">Vận chuyển</h3>
+                <h3 class="card-title">Thực hiện hợp đồng</h3>
                 <div class="card-tools">
                     <bBtn
                         v-if="hasPermission('create', 'delivery')"

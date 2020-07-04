@@ -11,5 +11,8 @@
 </script>
 
 <style scoped>
-
+    .overlay {
+        background: white !important;
+        opacity: 0.9;
+    }
 </style>

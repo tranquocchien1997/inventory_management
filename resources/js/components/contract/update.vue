@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    import Form from "../common/form";
+    import Form from "./form";
     import ContractConfigForm from "../configs/modules/ContractConfigForm"
 
     export default {

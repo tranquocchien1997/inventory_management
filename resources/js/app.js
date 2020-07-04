@@ -164,25 +164,25 @@ const routes = [
                 path: parseFullPathToShortPath(PAGE.LIST_DELIVERY),
                 component: () => import('./components/delivery/index'),
                 name: 'Delivery',
-                meta: { title: 'Quản lí vận chuyển'}
+                meta: { title: 'Quản lí thực hiện HĐ'}
             },
             {
                 path: parseFullPathToShortPath(PAGE.TRASH_DELIVERY),
                 component: () => import('./components/delivery/trash'),
                 name: 'DeliveryTrash',
-                meta: { title: 'Thùng rác quản lí vận chuyển' }
+                meta: { title: 'Thùng rác quản lí thực hiện HĐ' }
             },
             {
                 path: parseFullPathToShortPath(PAGE.CREATE_DELIVERY),
                 component: () => import('./components/delivery/createGeneral'),
                 name: 'DeliveryCreate',
-                meta: { title: 'Tạo vận chuyển' }
+                meta: { title: 'Tạo thực hiện HĐ' }
             },
             {
                 path: parseFullPathToShortPath(PAGE.UPDATE_DELIVERY),
                 component: () => import('./components/delivery/updateGeneral'),
                 name: 'DeliveryUpdate',
-                meta: { title: 'Chỉnh sửa vận chuyển' }
+                meta: { title: 'Chỉnh sửa thực hiện HĐ' }
             },
 
             ////////////////// DELIVERY_TRANSPORT
@@ -190,25 +190,25 @@ const routes = [
                 path: parseFullPathToShortPath(PAGE.LIST_DELIVERY_TRANSPORT),
                 component: () => import('./components/deliveryTransport/index'),
                 name: 'DeliveryTransport',
-                meta: { title: 'Quản lí phân công vận chuyển'}
+                meta: { title: 'Quản lí phân công thực hiện HĐ'}
             },
             {
                 path: parseFullPathToShortPath(PAGE.TRASH_DELIVERY_TRANSPORT),
                 component: () => import('./components/deliveryTransport/trash'),
                 name: 'DeliveryTransportTrash',
-                meta: { title: 'Thùng rác phân công vận chuyển' }
+                meta: { title: 'Thùng rác phân công thực hiện HĐ' }
             },
             {
                 path: parseFullPathToShortPath(PAGE.CREATE_DELIVERY_TRANSPORT),
                 component: () => import('./components/deliveryTransport/create'),
                 name: 'DeliveryTransportCreate',
-                meta: { title: 'Tạo phân công vận chuyển' }
+                meta: { title: 'Tạo phân công thực hiện HĐ' }
             },
             {
                 path: parseFullPathToShortPath(PAGE.UPDATE_DELIVERY_TRANSPORT),
                 component: () => import('./components/deliveryTransport/update'),
                 name: 'DeliveryTransportUpdate',
-                meta: { title: 'Chỉnh sửa phân công vận chuyển' }
+                meta: { title: 'Chỉnh sửa phân công thực hiện HĐ' }
             },
 
             ////////////////// DRIVER
@@ -373,6 +373,14 @@ const routes = [
                 component: () => import('./components/report/index'),
                 name: 'Report',
                 meta: { title: 'Báo cáo'}
+            },
+
+            ///////// REFERENCE
+            {
+                path: parseFullPathToShortPath(PAGE.LIST_REFERENCE),
+                component: () => import('./components/reference/index'),
+                name: 'Reference',
+                meta: { title: 'Cài đặt danh sách chọn'}
             },
         ]
     },

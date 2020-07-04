@@ -26,6 +26,8 @@ class Helper
     const REFERENCE_ACTION_TYPE = 'action-type';
     const REFERENCE_TABLE_NAME = 'table-name';
     const REFERENCE_DIRECTION = 'direction';
+    const REFERENCE_PAYMENT_STATUS = 'payment-status';
+    const REFERENCE_UNIT_AMOUNT = 'unit_amount';
 
     const TABLE_TRANSPORT_VENDOR = 'transport_vendor';
     const TABLE_DRIVER = 'driver';
@@ -68,6 +70,7 @@ class Helper
     ];
 
     const DEFAULT_STATUS_ID = 22;
+    const DEFAULT_STATUS_PAYMENT_ID = 32;
     const PENDING_STATUS_ID = 23;
     const SUCCESS_STATUS_ID = 24;
     const ENROL_INVENTORY_TYPE_ID = 7;

@@ -27,32 +27,31 @@ export default [
     },
     {},
     {
-        title: 'Ngày giao theo HĐ',
+        title: 'Trị giá tiền về',
+        initTitle: 'Trị giá tiền về',
+        model: 'amount_delivery',
+        type: 'currency'
+    },
+    {
+        title: 'Đơn vị tiền tệ',
+        model: 'unit_amount',
+        type: 'dropdown',
+        data: [],
+    },
+    {},
+    {},
+    {
+        title: 'Thời gian giao dự kiến',
         model: 'date_delivery',
         type: 'date',
     },
     {
-        title: 'Số lượng giao theo HĐ',
+        title: 'Số lượng dự kiến (tấn)',
         model: 'quantity_delivery',
         type: 'number',
     },
-    {
-        title: 'Số tiền nhận HĐ',
-        model: 'amount_delivery',
-        type: 'currency'
-    },
-    {},
-    {
-        title: 'Ngày đã giao',
-        model: 'date_delivered',
-        type: 'date',
-    },
-    {
-        title: 'Số lượng đã giao',
-        model: 'quantity_delivered',
-        type: 'number',
-    },
-
+    // {},
+    // {},
     {
         title: 'Ngày nhận tiền dự kiến',
         model: 'estimate_date_amount_receive',
@@ -60,7 +59,39 @@ export default [
     },
     {
         title: 'Số tiền về dự kiến',
+        initTitle: 'Số tiền về dự kiến',
         model: 'estimate_amount_receive',
+        type: 'currency',
+    },
+    {
+        type: 'btn',
+    },
+    {},
+    {},
+    {},
+    {
+        title: 'Ngày giao hàng',
+        model: 'date_delivered',
+        type: 'date',
+    },
+    {
+        title: 'Số lượng thực giao (tấn)',
+        model: 'quantity_delivered',
+        type: 'number',
+    },
+    // {},
+    // {},
+
+
+    {
+        title: 'Ngày tiền về thực tế',
+        model: 'date_amount_receive',
+        type: 'date',
+    },
+    {
+        title: 'Số tiền về thực tế',
+        initTitle: 'Số tiền về thực tế',
+        model: 'amount_receive',
         type: 'currency',
     },
     {
@@ -70,14 +101,11 @@ export default [
         data: [],
     },
     {
-        title: 'Ngày tiền về',
-        model: 'date_amount_receive',
-        type: 'date',
-    },
-    {
-        title: 'Số tiền về',
-        model: 'amount_receive',
-        type: 'currency',
+        title: 'Trạng thái tiền về',
+        model: 'status_payment',
+        type: 'dropdown',
+        data: [],
+        defaultValue: DEFAULT_STATUS_PAYMENT_ID
     },
     {
         title: 'Trạng thái',
@@ -86,9 +114,12 @@ export default [
         data: [],
         defaultValue: DEFAULT_STATUS_ID
     },
+    {},
     {
         title: 'Ghi chú',
         model: 'note',
         type: 'textArea',
     },
+    {},
+    {},
 ]

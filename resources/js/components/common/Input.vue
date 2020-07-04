@@ -1,4 +1,4 @@
-czxczxc<template>
+<template>
     <div>
         <b-numeric-formatted
             :disabled="item.disable"

@@ -25,15 +25,22 @@ function getDropdownField(item) {
                 value: item.name
             }
         })
-    }else if (item.model == 'payment_method') {
+    } else if (item.model == 'payment_method') {
         return reference.paymentMethod.map((item) => {
             return {
                 id: item.id,
                 value: item.display_value
             }
         })
-    }else if (item.model == 'direction_id') {
+    } else if (item.model == 'direction_id') {
         return reference.direction.map((item) => {
+            return {
+                id: item.id,
+                value: item.display_value
+            }
+        })
+    } else if (item.model == 'unit_amount') {
+        return reference.unitAmount.map((item) => {
             return {
                 id: item.id,
                 value: item.display_value

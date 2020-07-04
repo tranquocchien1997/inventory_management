@@ -18,7 +18,7 @@ class ContractController extends BaseController
                 'paymentMethod' => $this->baseModel->getReferenceByType(Helper::REFERENCE_PAYMENT_METHOD),
                 'actionType' => $this->baseModel->getReferenceByType(Helper::REFERENCE_ACTION_TYPE),
                 'direction' => $this->baseModel->getReferenceByType(Helper::REFERENCE_DIRECTION),
-
+                'unitAmount' => $this->baseModel->getReferenceByType(Helper::REFERENCE_UNIT_AMOUNT),
             ];
         }else{
             return [
@@ -28,6 +28,7 @@ class ContractController extends BaseController
                 'paymentMethod' => [],
                 'actionType' => [],
                 'direction' => [],
+                'unitAmount' => [],
             ];
         }
     }

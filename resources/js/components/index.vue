@@ -5,9 +5,9 @@
 
         <Sidebar/>
 
-        <div class="content-wrapper">
+        <div class="content-wrapper" style="padding-top:15px">
 
-            <HeaderContent />
+<!--            <HeaderContent />-->
 
             <!-- Main content -->
             <section class="content">

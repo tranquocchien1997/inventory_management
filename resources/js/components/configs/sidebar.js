@@ -32,17 +32,17 @@ export default {
             path: '#',
             child: [
                 {
-                    title: 'Phân công vận chuyển',
+                    title: 'Sắp xếp thực hiện HĐ',
                     id: 'delivery_transport',
                     path: Helper.parseFullPathToShortPath(PAGE.LIST_DELIVERY_TRANSPORT)
                 },
                 {
-                    title: 'Vận chuyển',
+                    title: 'Thực hiện hợp đồng',
                     id: 'delivery',
                     path: Helper.parseFullPathToShortPath(PAGE.LIST_DELIVERY)
                 },
                 {
-                    title: 'Đơn vị',
+                    title: 'Đơn vị vận chuyển',
                     id: 'transport',
                     path: Helper.parseFullPathToShortPath(PAGE.LIST_TRANSPORT)
                 },
@@ -75,7 +75,6 @@ export default {
             icon: 'fas fa-comments',
             id: 'notification',
             path: Helper.parseFullPathToShortPath(PAGE.LIST_NOTIFICATION),
-
         },
         {
             title: 'Báo cáo',
@@ -101,53 +100,55 @@ export default {
                 }
             ]
         },
-        // {
-        //     title: 'Cài đặt',
-        //     icon: 'fas fa-cogs',
-        //     path: '#',
-        //     child: [
-        //         {
-        //             title: 'Trạng thái đơn hàng',
-        //             path: '#'
-        //         },
-        //         {
-        //             title: 'Loại hợp đơn hàng',
-        //             path: '#'
-        //         },
-        //         {
-        //             title: 'Sản phẩm',
-        //             path: '#'
-        //         },
-        //         {
-        //             title: 'Loại sản phẩm',
-        //             path: '#'
-        //         },
-        //         {
-        //             title: 'Đơn vị sản phẩm',
-        //             path: '#'
-        //         },
-        //         {
-        //             title: 'Loại kho',
-        //             path: '#'
-        //         },
-        //         {
-        //             title: 'Thao tác kho',
-        //             path: '#'
-        //         },
-        //         {
-        //             title: 'Loại đơn hàng',
-        //             path: '#'
-        //         },
-        //         {
-        //             title: 'Loại vận chuyển',
-        //             path: '#'
-        //         },
-        //         {
-        //             title: 'Loại báo cáo',
-        //             path: '#'
-        //         },
-        //
-        //     ]
-        // },
+        {
+            title: 'Cài đặt',
+            icon: 'fas fa-cogs',
+            path: '#',
+            child: [
+                {
+                    title: 'Danh sách chọn',
+                    icon: 'fas fa-comments',
+                    id: 'notification',
+                    path: Helper.parseFullPathToShortPath(PAGE.LIST_REFERENCE),
+                },
+                // {
+                //     title: 'Loại hợp đơn hàng',
+                //     path: '#'
+                // },
+                // {
+                //     title: 'Sản phẩm',
+                //     path: '#'
+                // },
+                // {
+                //     title: 'Loại sản phẩm',
+                //     path: '#'
+                // },
+                // {
+                //     title: 'Đơn vị sản phẩm',
+                //     path: '#'
+                // },
+                // {
+                //     title: 'Loại kho',
+                //     path: '#'
+                // },
+                // {
+                //     title: 'Thao tác kho',
+                //     path: '#'
+                // },
+                // {
+                //     title: 'Loại đơn hàng',
+                //     path: '#'
+                // },
+                // {
+                //     title: 'Loại vận chuyển',
+                //     path: '#'
+                // },
+                // {
+                //     title: 'Loại báo cáo',
+                //     path: '#'
+                // },
+
+            ]
+        },
     ]
 }

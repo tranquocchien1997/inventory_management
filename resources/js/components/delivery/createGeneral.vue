@@ -5,7 +5,7 @@
         <div class="card card-primary card-outline">
             <Loading :show="loading.action"/>
             <div class="card-header">
-                <h3 class="card-title">Phân công vận chuyển</h3>
+                <h3 class="card-title">Phân công thực hiện HĐ</h3>
                 <div class="card-tools">
                     <bBtn
                         v-if="hasPermission('create', 'delivery_transport')"
