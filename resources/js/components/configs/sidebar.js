@@ -27,6 +27,12 @@ export default {
             path: Helper.parseFullPathToShortPath(PAGE.LIST_CONTRACT)
         },
         {
+            title: 'Hợp đồng kinh doanh',
+            icon: 'fas fa-copy',
+            id: 'contract',
+            path: Helper.parseFullPathToShortPath(PAGE.LIST_CONTRACT_BUSINESS)
+        },
+        {
             title: 'Vận chuyển',
             icon: 'fas fa-truck-moving',
             path: '#',

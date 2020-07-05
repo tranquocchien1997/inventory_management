@@ -49,6 +49,13 @@ Route::prefix('contract/')->group(function () {
     Route::get('update', 'ContractController@pageMain')->name('contract.update');
 });
 
+Route::prefix('contract-business/')->group(function () {
+    Route::get('lists', 'ContractBusinessController@pageMain')->name('contract_business.lists');
+    Route::get('trash', 'ContractBusinessController@pageMain')->name('contract_business.trash');
+    Route::get('create', 'ContractBusinessController@pageMain')->name('contract_business.create');
+    Route::get('update', 'ContractBusinessController@pageMain')->name('contract_business.update');
+});
+
 Route::prefix('customer/')->group(function () {
     Route::get('lists', 'CustomerController@pageMain')->name('customer.lists');
     Route::get('trash', 'CustomerController@pageMain')->name('customer.trash');
@@ -290,6 +297,19 @@ Route::prefix('api/')->group(function () {
         Route::post('get', 'ReferenceController@get')->name('api.reference.get');
         Route::post('reference', 'ReferenceController@reference')->name('api.reference.reference');
 
+    });
+
+    Route::prefix('contact-business/')->group(function () {
+        Route::post('lists', 'ContractBusinessController@lists')->name('api.contract_business.lists');
+        Route::post('trash', 'ContractBusinessController@trash')->name('api.contract_business.trash');
+        Route::post('create', 'ContractBusinessController@create')->name('api.contract_business.create');
+        Route::post('update', 'ContractBusinessController@update')->name('api.contract_business.update');
+        Route::post('get', 'ContractBusinessController@get')->name('api.contract_business.get');
+        Route::post('soft-delete', 'ContractBusinessController@softDelete')->name('api.contract_business.softdelete');
+        Route::post('delete', 'ContractBusinessController@delete')->name('api.contract_business.delete');
+        Route::post('restore', 'ContractBusinessController@restore')->name('api.contract_business.restore');
+        Route::post('reference', 'ContractBusinessController@reference')->name('api.contract_business.reference');
+        Route::post('rollback', 'ContractBusinessController@rollback')->name('api.contract_business.rollback');
     });
 
     Route::prefix('report/')->group(function () {

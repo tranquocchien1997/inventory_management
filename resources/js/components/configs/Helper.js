@@ -4,7 +4,7 @@ export const unitKilogram = 'kg';
 export const unitTonne = 'tấn';
 
 export function formatWeight(data, unit = unitTonne) {
-    if (data){
+    if (data || data == 0){
         return data.toLocaleString() + ' ' + unitTonne
     }
 

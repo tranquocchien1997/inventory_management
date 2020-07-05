@@ -73,6 +73,18 @@
             TRASH_CONTRACT: "{{route('api.contract.trash')}}",
             REFERENCE_CONTRACT: "{{route('api.contract.reference')}}",
 
+            // CONTRACT BUSINESS
+            LIST_CONTRACT_BUSINESS: "{{route('api.contract_business.lists')}}",
+            CREATE_CONTRACT_BUSINESS: "{{route('api.contract_business.create')}}",
+            UPDATE_CONTRACT_BUSINESS: "{{route('api.contract_business.update')}}",
+            GET_CONTRACT_BUSINESS: "{{route('api.contract_business.get')}}",
+            SOFT_DELETE_CONTRACT_BUSINESS: "{{route('api.contract_business.softdelete')}}",
+            DELETE_CONTRACT_BUSINESS: "{{route('api.contract_business.delete')}}",
+            RESTORE_CONTRACT_BUSINESS: "{{route('api.contract_business.restore')}}",
+            TRASH_CONTRACT_BUSINESS: "{{route('api.contract_business.trash')}}",
+            REFERENCE_CONTRACT_BUSINESS: "{{route('api.contract_business.reference')}}",
+            ROLLBACK_CONTRACT_BUSINESS: "{{route('api.contract_business.rollback')}}",
+
             // CUSTOMER
             LIST_CUSTOMER: "{{route('api.customer.lists')}}",
             CREATE_CUSTOMER: "{{route('api.customer.create')}}",
@@ -212,6 +224,12 @@
             LIST_CONTRACT: "{{route('contract.lists')}}",
             TRASH_CONTRACT: "{{route('contract.trash')}}",
             UPDATE_CONTRACT: "{{route('contract.update')}}",
+
+            // CONTRACT BUSINESS
+            CREATE_CONTRACT_BUSINESS: "{{route('contract_business.create')}}",
+            LIST_CONTRACT_BUSINESS: "{{route('contract_business.lists')}}",
+            TRASH_CONTRACT_BUSINESS: "{{route('contract_business.trash')}}",
+            UPDATE_CONTRACT_BUSINESS: "{{route('contract_business.update')}}",
 
             // CUSTOMER
             CREATE_CUSTOMER: "{{route('customer.create')}}",

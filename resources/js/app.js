@@ -133,6 +133,33 @@ const routes = [
                 meta: { title: 'Chỉnh sửa hợp đồng' }
             },
 
+
+            ////////////////// CONTRACT BUSINESS
+            {
+                path: parseFullPathToShortPath(PAGE.LIST_CONTRACT_BUSINESS),
+                component: () => import('./components/contractBusiness/index'),
+                name: 'ContractBusiness',
+                meta: { title: 'Quản lí hợp đồng'}
+            },
+            {
+                path: parseFullPathToShortPath(PAGE.TRASH_CONTRACT_BUSINESS),
+                component: () => import('./components/contractBusiness/trash'),
+                name: 'ContractBusinessTrash',
+                meta: { title: 'Thùng rác quản lí hợp đồng' }
+            },
+            {
+                path: parseFullPathToShortPath(PAGE.CREATE_CONTRACT_BUSINESS),
+                component: () => import('./components/contractBusiness/create'),
+                name: 'ContractBusinessCreate',
+                meta: { title: 'Tạo hợp đồng' }
+            },
+            {
+                path: parseFullPathToShortPath(PAGE.UPDATE_CONTRACT_BUSINESS),
+                component: () => import('./components/contractBusiness/update'),
+                name: 'ContractBusinessUpdate',
+                meta: { title: 'Chỉnh sửa hợp đồng' }
+            },
+
             ////////////////// CUSTOMER
             {
                 path: parseFullPathToShortPath(PAGE.LIST_CUSTOMER),
