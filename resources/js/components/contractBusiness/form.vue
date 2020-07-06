@@ -196,6 +196,9 @@
                     this.statusSubmit = false
                     return 'Vượt mức số lượng HĐ'
                 }
+
+                this.statusSubmit = true
+
                 return this.helper.formatWeight(parseFloat(this.model.quantity - qty))
             }
         },
