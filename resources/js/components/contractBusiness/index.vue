@@ -37,20 +37,10 @@
             }
             config.titlePanel = 'Danh sách hợp đồng'
             config.titleColumn = {
-                // contract_type_id: 'Loại hợp đồng',
                 company_name: 'Khách hàng',
                 creator: 'Người tạo',
-                direction: 'Đường đi',
                 code: 'Mã hợp đồng',
                 quantity: 'Số lượng',
-                // amount: 'Đơn giá',
-                // total_amount: 'Số tiền',
-                // payment: 'Phương thức thanh toán',
-                delivered_quantity: 'Số lượng đã giao',
-                received_quantity: 'Số lượng đã nhận',
-                // expired_delivery: 'Thời hạn giao',
-                // updated_at: 'Ngày cập nhật',
-                // created_at: 'Ngày tạo',
                 action: 'Thao tác'
             }
 
