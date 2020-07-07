@@ -37,20 +37,10 @@
             }
             config.titlePanel = 'Danh sách hợp đồng'
             config.titleColumn = {
-                // contract_type_id: 'Loại hợp đồng',
                 company_name: 'Khách hàng',
-                creator: 'Người tạo',
-                direction: 'Đường đi',
+                date_created: 'Ngày hợp đồng',
                 code: 'Mã hợp đồng',
                 quantity: 'Số lượng',
-                // amount: 'Đơn giá',
-                // total_amount: 'Số tiền',
-                // payment: 'Phương thức thanh toán',
-                delivered_quantity: 'Số lượng đã giao',
-                received_quantity: 'Số lượng đã nhận',
-                // expired_delivery: 'Thời hạn giao',
-                // updated_at: 'Ngày cập nhật',
-                // created_at: 'Ngày tạo',
                 action: 'Thao tác'
             }
 
@@ -60,12 +50,7 @@
             parseResponse(res){
                 return res.map((item) => {
                     item.quantity = this.helper.formatWeight(item.quantity)
-                    item.amount = this.helper.formatCurrency(item.amount)
-                    item.delivered_quantity = this.helper.formatWeight(item.delivered_quantity)
-                    item.received_quantity = this.helper.formatWeight(item.received_quantity)
-                    item.expired_delivery = this.helper.formatDateTime(item.expired_delivery)
-                    item.created_at = this.helper.formatDateTime(item.created_at)
-                    item.updated_at = this.helper.formatDateTime(item.updated_at)
+                    item.date_created = this.helper.formatDateTime(item.date_created, 'DD/MM/YYYY')
 
                     return item
                 })
