@@ -37,7 +37,7 @@
                             </select>
                         </div>
 
-                        <div class="input-group input-group-sm" style="width: 200px;">
+                        <div class="input-group input-group-sm" :style="isMobile() ? 'width: 200px;padding-top:15px' : 'width: 200px;'">
                             <input type="text" v-model="search" class="form-control float-right" placeholder="Tìm kiếm">
 
                             <div class="input-group-append">
