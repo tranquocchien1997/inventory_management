@@ -89,7 +89,19 @@
                                 <tr v-for="item in listsInventory">
                                     <td>{{item.code}}</td>
                                     <td>{{item.name}}</td>
-                                    <td>{{item.quantity_business.toLocaleString()}}</td>
+                                    <td>
+                                        <b-telerik-numberic
+                                            :disabled="true"
+                                            :always-disabled="true"
+                                            class-name="form-control"
+                                            null-placeholder="-"
+                                            placeholder=""
+                                            org-placeholder=""
+                                            label=""
+                                            v-model="item.quantity_business"
+                                            :isDecimalNumber="true"
+                                            :decimalNumbers=3 />
+                                    </td>
                                     <td>
                                         <b-telerik-numberic
                                             :disabled="!formEdit ? true : item.disabled"
