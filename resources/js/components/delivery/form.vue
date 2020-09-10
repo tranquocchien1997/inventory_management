@@ -167,6 +167,7 @@
         },
         methods: {
             getParamsCommon(){
+                console.log(this.id)
                 return {
                     id: this.id ? this.id : this.$route.query.id
                 }
@@ -318,12 +319,21 @@
                     }
                 })
             },
-            // 'model.amount': function () {
-            //     this.calculateTotalAmountContract()
-            // },
-            // 'model.quantity': function () {
-            //     this.calculateTotalAmountContract()
-            // }
+            'model.contract_id': function (value) {
+                if (value) {
+                    this.model.bank_id = reference.contract ? reference.contract.find(item => item.id == this.model.contract_id).bank_id : null
+
+                }
+            },
+            'model.estimate_date_amount_receive_count': function (value) {
+                if (this.model.date_delivery) {
+                    this.model.estimate_date_amount_receive = moment(this.model.date_delivery, 'DD/MM/YYYY').add(this.model.estimate_date_amount_receive_count,'days')
+                }
+            },
+            'model.quantity_delivery': function (value) {
+
+                this.model.estimate_amount_receive =  reference.contract ? reference.contract.find(item => item.id == this.model.contract_id).amount * value : 0
+            }
         }
     };
 </script>

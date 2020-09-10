@@ -53,16 +53,25 @@ export default [
     // {},
     // {},
     {
-        title: 'Ngày nhận tiền dự kiến',
-        model: 'estimate_date_amount_receive',
-        type: 'date',
-    },
-    {
         title: 'Số tiền về dự kiến',
         initTitle: 'Số tiền về dự kiến',
         model: 'estimate_amount_receive',
         type: 'currency',
     },
+    {},
+    {
+        title: 'Số ngày nhận tiền dự kiến',
+        model: 'estimate_date_amount_receive_count',
+        type: 'dropdown',
+        data: [],
+    },
+    {
+        title: 'Ngày nhận tiền dự kiến',
+        model: 'estimate_date_amount_receive',
+        type: 'date',
+    },
+    {},
+    {},
     {
         type: 'btn',
     },
@@ -98,6 +107,8 @@ export default [
         title: 'Ngân hàng tiền về',
         model: 'bank_id',
         type: 'dropdown',
+        alwayDisable: true,
+        disable: true,
         data: [],
     },
     {

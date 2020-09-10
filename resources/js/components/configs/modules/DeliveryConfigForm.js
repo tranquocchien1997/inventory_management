@@ -53,7 +53,28 @@ function getDropdownField(item) {
                 value: item.display_value
             }
         })
+    } else if (item.model == 'estimate_date_amount_receive_count') {
+        return [
+            {
+                id: 7,
+                value: 7
+            },
+            {
+                id: 10,
+                value: 10
+            },
+            {
+                id: 14,
+                value: 14
+            },
+            {
+                id: 21,
+                value: 21
+            }
+        ]
     }
+
+
 }
 
 config.id = 'delivery'

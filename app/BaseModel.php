@@ -44,6 +44,9 @@ class BaseModel extends Model
             unset($newData['_token']);
         }
 
+        $newData['updated_at'] = Carbon::now();
+        $newData['created_at'] = Carbon::now();
+
         $this->model = $model;
         $this->query = $this->setTableName();
         return $this->query->insertGetId($newData);

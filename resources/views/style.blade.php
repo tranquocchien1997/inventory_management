@@ -56,4 +56,8 @@
     .card .card .card-title {
         font-size: 20px;
     }
+
+    select.b__select_element {
+        background: white;
+    }
 </style>

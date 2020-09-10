@@ -62,7 +62,6 @@ class DeliveryController extends BaseController
         $contract_id = $request->contract_id;
         $param = $request->all();
 
-
         $delivery_id = $this->baseModel->createRecord($this->tableName, $param);
 
         if ($request->status == Helper::SUCCESS_STATUS_ID && $request->contract_id){
@@ -73,7 +72,7 @@ class DeliveryController extends BaseController
         }
 //        $this->baseModel->createRecord(Helper::TABLE_DELIVERY_CONTRACT, ['contract_id' => $contract_id, 'delivery_id' => $delivery_id]);
 
-        return BaseController::apiResponse(true);
+        return BaseController::apiResponse($delivery_id);
 
     }
 

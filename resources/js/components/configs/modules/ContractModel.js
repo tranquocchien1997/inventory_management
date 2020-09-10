@@ -34,21 +34,36 @@ export default [
         model: 'amount',
         type: 'currency',
     },
+
+    {
+        title: 'Ngân hàng tiền về',
+        model: 'bank_id',
+        type: 'dropdown',
+        data: [],
+    },
     {
         title: 'Đơn vị tiền tệ',
         model: 'unit_amount',
         type: 'dropdown',
         data: [],
     },
-    {},
     {
         title: 'Tổng giá trị hợp đồng',
         initTitle: 'Tổng giá trị hợp đồng',
         model: 'total_amount',
         type: 'currency',
     },
-    {},
-    {},
+    {
+        title: 'Tỷ giá tiền tệ',
+        model: 'rate_amount_vn',
+        type: 'number',
+    },
+    {
+        title: 'Tổng giá trị hợp đồng (VND)',
+        initTitle: 'Tổng giá trị hợp đồng (VND)',
+        model: 'total_amount_vn',
+        type: 'currency',
+    },
     {},
 
     {

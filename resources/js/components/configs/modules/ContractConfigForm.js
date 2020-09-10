@@ -46,6 +46,13 @@ function getDropdownField(item) {
                 value: item.display_value
             }
         })
+    } else if (item.model == 'bank_id' && reference.bank) {
+        return reference.bank.map((item) => {
+            return {
+                id: item.id,
+                value: item.display_value
+            }
+        })
     }
 }
 

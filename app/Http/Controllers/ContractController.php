@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Helper;
 use Illuminate\Http\Request;
-use mysql_xdevapi\Table;
+use Illuminate\Support\Facades\DB;
+
 
 class ContractController extends BaseController
 {
@@ -19,6 +20,7 @@ class ContractController extends BaseController
                 'actionType' => $this->baseModel->getReferenceByType(Helper::REFERENCE_ACTION_TYPE),
                 'direction' => $this->baseModel->getReferenceByType(Helper::REFERENCE_DIRECTION),
                 'unitAmount' => $this->baseModel->getReferenceByType(Helper::REFERENCE_UNIT_AMOUNT),
+                'bank' => $this->baseModel->getReferenceByType(Helper::REFERENCE_BANK),
             ];
         }else{
             return [
@@ -29,6 +31,7 @@ class ContractController extends BaseController
                 'actionType' => [],
                 'direction' => [],
                 'unitAmount' => [],
+                'bank' => [],
             ];
         }
     }
@@ -71,12 +74,10 @@ class ContractController extends BaseController
     public function getDeliveryByContract(Request $request){
 
         $condition = Helper::CONDITION_DEFAULT;
-        $condition['join'] = [
-            [Helper::TABLE_DELIVERY_CONTRACT, 'delivery_contract.delivery_id', 'delivery.id'],
-        ];
+
         $condition['condition'] = [
             'delivery.invalid' => Helper::RECORD_INVALID,
-            'delivery_contract.contract_id' => $request->id
+            'delivery.contract_id' => $request->id
         ];
         $condition['sort'] = ['delivery.id' => 'DESC'];
 
@@ -86,4 +87,32 @@ class ContractController extends BaseController
 
         return BaseController::apiResponse($this->baseModel->getAllRecord(Helper::TABLE_DELIVERY, $condition));
     }
+
+    public function create(Request $request)
+    {
+
+        $contractId = $this->baseModel->createRecord($this->tableName, $request->all());
+
+        DB::table(Helper::TABLE_DELIVERY)
+            ->where('contract_id', $contractId)
+            ->update([
+                'bank_id' => $request->bank_id
+            ]);
+
+        return BaseController::apiResponse($contractId);
+
+    }
+
+    public function update(Request $request)
+    {
+
+        DB::table(Helper::TABLE_DELIVERY)
+            ->where('contract_id', $request->id)
+            ->update([
+                'bank_id' => $request->bank_id
+            ]);
+
+        return BaseController::apiResponse($this->baseModel->updateById($this->tableName, $request->id, $request->all()));
+    }
+
 }

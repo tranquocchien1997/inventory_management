@@ -14,7 +14,7 @@ class ReportController extends BaseController
     public function setReference($request){
         return [
             'inventory' => DB::table(Helper::TABLE_INVENTORY)->select(['name', 'address', 'id', 'type'])->get(),
-//            'enrolInventory' => DB::table(Helper::TABLE_INVENTORY)->where('type', Helper::ENROL_INVENTORY_TYPE_ID)->get(),
+            'direction' => $this->baseModel->getReferenceByType(Helper::REFERENCE_DIRECTION)
         ];
     }
     public function create(Request $request)
@@ -30,16 +30,16 @@ class ReportController extends BaseController
 
         if ($request->type == 1) {
             $paper = 'a3';
-            $data = $this->queryContractReport($fromDate, $toDate);
+            $data = $this->queryContractReport($fromDate, $toDate, $request->direction);
             $blade = 'report.contract';
         } elseif($request->type == 2) {
             $paper = 'a4';
-            $data = $this->queryInventoryReport($fromDate, $toDate);
+            $data = $this->queryInventoryReport($fromDate, $toDate, $request->direction);
             $blade = 'report.inventory';
 
         } else {
             $paper = 'a4';
-            $data = $this->queryInventoryBasicReport($fromDate, $toDate);
+            $data = $this->queryInventoryBasicReport($fromDate, $toDate, $request->direction);
             $params = $request->all();
             $data['input'] = json_decode($params['inventory'], true);
 
@@ -75,7 +75,7 @@ class ReportController extends BaseController
 //        return BaseController::apiResponse(true);
     }
 
-    public function queryContractReport($fromDate, $toDate){
+    public function queryContractReport($fromDate, $toDate, $direction = null){
         $query = DB::table(Helper::TABLE_CONTRACT);
         if ($fromDate){
             $query = $query->where('contract.created_at', '>=', Carbon::createFromFormat('d/m/Y',$fromDate)->format('Y-m-d') . " 00:00:00");
@@ -83,7 +83,10 @@ class ReportController extends BaseController
 
         if ($toDate){
             $query = $query->where('contract.created_at', '<=', Carbon::createFromFormat('d/m/Y',$toDate)->format('Y-m-d') . " 23:59:00");
+        }
 
+        if ($direction){
+            $query = $query->where('direction_id', $direction);
         }
 
         $query = $query->leftJoin('customer', 'customer.id', '=', 'customer_id')
@@ -141,7 +144,7 @@ class ReportController extends BaseController
         ];
     }
 
-    public function queryInventoryReport($fromDate, $toDate)
+    public function queryInventoryReport($fromDate, $toDate, $direction = null)
     {
         $query = DB::table(Helper::TABLE_CONTRACT);
         if ($fromDate){
@@ -150,7 +153,10 @@ class ReportController extends BaseController
 
         if ($toDate){
             $query = $query->where('contract.created_at', '<=', Carbon::createFromFormat('d/m/Y',$toDate)->format('Y-m-d') . " 23:59:00");
+        }
 
+        if ($direction){
+            $query = $query->where('direction_id', $direction);
         }
 
         $query = $query->leftJoin('action', 'action.contract_id', '=', 'contract.id')
@@ -353,7 +359,7 @@ class ReportController extends BaseController
 
     }
 
-    public function queryInventoryBasicReport($fromDate, $toDate){
+    public function queryInventoryBasicReport($fromDate, $toDate, $direction = null){
         $query = DB::table(Helper::TABLE_INVENTORY);
 
         if ($fromDate){

@@ -117,6 +117,12 @@
                     data: [],
                     required: true
                 },
+                {
+                    title: 'Tuyến đường',
+                    model: 'direction',
+                    type: 'dropdown',
+                    data: [],
+                },
                 // {
                 //     title: 'Từ ngày',
                 //     model: 'from_date',
@@ -212,21 +218,29 @@
                 this.forceReRenderComponent()
             },
             getDropdownField(item) {
-                if (item.model == 'type'){
-                    return [
-                        {
-                            id: 1,
-                            value: 'Theo dõi thực hiện hợp đồng'
-                        },
-                        {
-                            id: 2,
-                            value: 'Chi tiết phải giao'
-                        },
-                        {
-                            id: 3,
-                            value: 'Báo cáo nhanh tồn kho'
-                        }
-                    ]
+                switch (item.model) {
+                    case 'type':
+                        return [
+                            {
+                                id: 1,
+                                value: 'Theo dõi thực hiện hợp đồng'
+                            },
+                            {
+                                id: 2,
+                                value: 'Chi tiết phải giao'
+                            },
+                            {
+                                id: 3,
+                                value: 'Báo cáo nhanh tồn kho'
+                            }
+                        ]
+                    case 'direction':
+                        return reference.direction ? reference.direction.map((item) => {
+                            return {
+                                id: item.id,
+                                value: item.display_value
+                            }
+                        }) : []
                 }
             },
             goUp(index){
